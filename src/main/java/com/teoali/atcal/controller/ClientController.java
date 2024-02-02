@@ -2,7 +2,7 @@ package com.teoali.atcal.controller;
 
 import com.teoali.atcal.domain.Client;
 import com.teoali.atcal.repository.ClientRepository;
-import java.util.List;
+import com.teoali.atcal.repository.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,16 +19,19 @@ public class ClientController {
   @Autowired
   private ClientRepository clientRepository;
 
+  @Autowired
+  private GroupRepository groupRepository;
+
   @GetMapping
   public String list(Model model) {
-    List<Client> clients = clientRepository.findAll();
-    model.addAttribute("clients", clients);
+    model.addAttribute("clients", clientRepository.findAll());
     return "clients/list";
   }
 
   @GetMapping("/create")
   public String createForm(Model model) {
     model.addAttribute("client", new Client());
+    model.addAttribute("groups", groupRepository.findAll());
     return "clients/create";
   }
 

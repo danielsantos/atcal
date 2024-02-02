@@ -1,29 +1,27 @@
-<head th:replace="~{layoutBase :: head}">
-</head>
+<head th:replace="~{layoutBase :: head}"></head>
 
 <body>
-<div class="container mb-2">
-<h1>Clientes</h1>
-<table class="table table-light">
-    <tr class="table-dark">
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Ações</th>
-    </tr>
-    <tr th:each="client : ${clients}">
-        <td th:text="${client.id}"></td>
-        <td th:text="${client.name}"></td>
-<!--        <td>-->
-<!--            <a th:href="@{/clients/edit/{id}(id=${client.id})}">Editar</a> |-->
-<!--            <a th:href="@{/clients/delete/{id}(id=${client.id})}">Excluir</a>-->
-<!--        </td>-->
-        <td class="buttons ">
-            <a th:href="@{/clients/edit/{id}(id=${client.id})}" th:method="get" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-            <a th:href="@{/clients/delete/{id}(id=${client.id})}" th:method="delete" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-        </td>
-    </tr>
-</table>
-<p><a th:href="@{/clients/create}"><button class="btn btn-dark">Adicionar cliente</button></a></p>
-</div>
+    <div th:replace="~{layoutBase :: navbar}"></div>
+    <div class="container mb-2">
+        <h1>Clientes</h1>
+        <table class="table table-light">
+            <tr class="table-dark">
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Grupo</th>
+                <th>Ações</th>
+            </tr>
+            <tr th:each="client : ${clients}">
+                <td th:text="${client.id}"></td>
+                <td th:text="${client.name}"></td>
+                <td th:text="${client.group.name}"></td>
+                <td class="buttons ">
+                    <a th:href="@{/clients/edit/{id}(id=${client.id})}" th:method="get" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                    <a th:href="@{/clients/delete/{id}(id=${client.id})}" th:method="delete" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        </table>
+        <p><a th:href="@{/clients/create}"><button class="btn btn-dark">Adicionar cliente</button></a></p>
+    </div>
 </body>
 </html>
