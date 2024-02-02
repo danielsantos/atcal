@@ -8,10 +8,10 @@
 </head>
 <body>
 <h2>Editar Usuário</h2>
-<form th:object="${usuario}" th:action="@{/editar/{id}(id=${usuario.id})}" method="post">
-    <label>Nome: <input type="text" th:field="*{nome}" /></label><br/>
+<form th:object="${user}" th:action="@{/users/edit/{id}(id=${user.id})}" method="post">
+    <label>Nome: <input type="text" th:field="*{name}" /></label><br/>
     <input type="submit" value="Salvar"/>
 </form>
-<p><a th:href="@{/}">Voltar para a lista de usuários</a></p>
+<p><a th:href="@{/users}">Voltar para a lista de usuários</a></p>
 </body>
 </html>

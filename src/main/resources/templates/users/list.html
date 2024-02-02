@@ -1,0 +1,25 @@
+<head th:replace="~{layoutBase :: head}">
+</head>
+
+<body>
+<div class="container mb-2">
+<h1>Usuários</h1>
+<table class="table table-light">
+    <tr class="table-dark">
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Ações</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td>
+            <a th:href="@{/users/edit/{id}(id=${user.id})}">Editar</a> |
+            <a th:href="@{/users/delete/{id}(id=${user.id})}">Excluir</a>
+        </td>
+    </tr>
+</table>
+<p><a th:href="@{/users/create}"><button class="btn btn-dark">Adicionar usuário</button></a></p>
+</div>
+</body>
+</html>

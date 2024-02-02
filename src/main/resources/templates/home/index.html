@@ -1,0 +1,11 @@
+<head th:replace="~{layoutBase :: head}">
+</head>
+
+<body>
+<div class="container mb-2">
+<h1>Home</h1>
+<p><a th:href="@{/users}"><button class="btn btn-dark">Usuários</button></a></p> <!-- TODO REMOVE TO PROD -->
+<p><a th:href="@{/clients}"><button class="btn btn-dark">Clientes</button></a></p>
+</div>
+</body>
+</html>

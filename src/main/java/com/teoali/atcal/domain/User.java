@@ -9,14 +9,14 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class Usuario {
+public class User {
   @Id
-  @Column(name = "user_id")
+  @Column
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "user_name")
-  private String nome;
+  @Column
+  private String name;
 
   public Long getId() {
     return id;
@@ -26,11 +26,11 @@ public class Usuario {
     this.id = id;
   }
 
-  public String getNome() {
-    return nome;
+  public String getName() {
+    return name;
   }
 
-  public void setNome(String nome) {
-    this.nome = nome;
+  public void setName(String name) {
+    this.name = name;
   }
 }
