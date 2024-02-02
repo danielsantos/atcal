@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+
+<head th:replace="~{layoutBase :: head}">
+</head>
+
+<body>
+<h2>Adicionar Grupo</h2>
+<form th:object="${group}" th:action="@{/groups/create}" method="post">
+    <label>Nome: <input type="text" th:field="*{name}" /></label><br/>
+    <input type="submit" value="Salvar"/>
+</form>
+<p><a th:href="@{/groups}">Voltar para a lista de grupos</a></p>
+</body>
+</html>

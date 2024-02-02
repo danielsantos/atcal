@@ -1,0 +1,26 @@
+<head th:replace="~{layoutBase :: head}">
+</head>
+
+<body>
+<div class="container mb-2">
+<h1>Grupos</h1>
+<table class="table table-light">
+    <tr class="table-dark">
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Ações</th>
+    </tr>
+    <tr th:each="group : ${groups}">
+        <td th:text="${group.id}"></td>
+        <td th:text="${group.name}"></td>
+        <td class="buttons ">
+            <a th:href="@{/groups/edit/{id}(id=${group.id})}" th:method="get" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+            <!-- <a th:href="@{/groups/delete/{id}(id=${group.id})}" th:method="delete" class="btn btn-danger"><i class="fa fa-trash"></i></a> -->
+            <!-- TODO V2: Implentar validacao de usuario no grupo antes de exclusao -->
+        </td>
+    </tr>
+</table>
+<p><a th:href="@{/groups/create}"><button class="btn btn-dark">Adicionar grupo</button></a></p>
+</div>
+</body>
+</html>

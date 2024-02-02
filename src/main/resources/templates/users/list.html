@@ -13,9 +13,9 @@
     <tr th:each="user : ${users}">
         <td th:text="${user.id}"></td>
         <td th:text="${user.name}"></td>
-        <td>
-            <a th:href="@{/users/edit/{id}(id=${user.id})}">Editar</a> |
-            <a th:href="@{/users/delete/{id}(id=${user.id})}">Excluir</a>
+        <td class="buttons ">
+            <a th:href="@{/users/edit/{id}(id=${user.id})}" th:method="get" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+            <a th:href="@{/users/delete/{id}(id=${user.id})}" th:method="delete" class="btn btn-danger"><i class="fa fa-trash"></i></a>
         </td>
     </tr>
 </table>
