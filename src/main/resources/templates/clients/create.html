@@ -7,15 +7,17 @@
 <body>
     <div th:replace="~{layoutBase :: navbar}"></div>
     <div class="container">
-        <h1 class="mb-3">Adicionar cliente</h1>
+        <h1 class="mb-3">Adicionar Cliente</h1>
         <form th:object="${client}" th:action="@{/clients/create}" method="post">
-            <label>Nome: <input type="text" th:field="*{name}" /></label><br/>
+            <label>Nome: <input type="text" th:field="*{name}" /></label>
+            <br/>
             <label>Grupo:
                 <select th:field="*{group}">
-                    <option th:each="it : ${groups}" th:value="${it.id}" th:text="${it.name}">
-                    </option>
+                    <option value="">-- Selecione --</option>
+                    <option th:each="it : ${groups}" th:value="${it.id}" th:text="${it.name}"></option>
                 </select>
-            </label><br/>
+            </label>
+            <br/>
             <p><button type="submit" class="btn btn-dark">Salvar</button></p>
         </form>
     </div>

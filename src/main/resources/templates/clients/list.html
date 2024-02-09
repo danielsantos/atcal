@@ -14,7 +14,7 @@
             <tr th:each="client : ${clients}">
                 <td th:text="${client.id}"></td>
                 <td th:text="${client.name}"></td>
-                <td th:text="${client.group.name}"></td>
+                <td th:text="${client.group?.name}"></td>
                 <td class="buttons ">
                     <a th:href="@{/clients/edit/{id}(id=${client.id})}" th:method="get" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
                     <a th:href="@{/clients/delete/{id}(id=${client.id})}" th:method="delete" class="btn btn-danger"><i class="fa fa-trash"></i></a>

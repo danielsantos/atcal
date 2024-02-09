@@ -32,9 +32,9 @@ public class ClientController {
   }
 
   @GetMapping("/create")
-  public String createForm(Model model) {
+  public String createForm(Model model, Authentication authentication) {
     model.addAttribute("client", new Client());
-    model.addAttribute("groups", groupRepository.findAll());
+    model.addAttribute("groups", groupRepository.findByUser(getUser(authentication)));
     return "clients/create";
   }
 
@@ -46,14 +46,16 @@ public class ClientController {
   }
 
   @GetMapping("/edit/{id}")
-  public String editForm(@PathVariable Long id, Model model) {
+  public String editForm(@PathVariable Long id, Model model, Authentication authentication) {
     Client client = clientRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid client Id: " + id));
     model.addAttribute("client", client);
+    model.addAttribute("groups", groupRepository.findByUser(getUser(authentication)));
     return "clients/edit";
   }
 
   @PostMapping("/edit/{id}")
-  public String edit(@PathVariable Long id, @ModelAttribute Client client) {
+  public String edit(@PathVariable Long id, @ModelAttribute Client client, Authentication authentication) {
+    client.setUser(getUser(authentication));
     client.setId(id);
     clientRepository.save(client);
     return "redirect:/clients";

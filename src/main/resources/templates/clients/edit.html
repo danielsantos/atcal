@@ -10,6 +10,13 @@
         <form th:object="${client}" th:action="@{/clients/edit/{id}(id=${client.id})}" method="post">
             <label>Nome: <input type="text" th:field="*{name}" /></label>
             <br/>
+            <label>Grupo:
+                <select th:field="*{group}">
+                    <option value="">-- Selecione --</option>
+                    <option th:each="it : ${groups}" th:value="${it.id}" th:text="${it.name}"></option>
+                </select>
+            </label>
+            <br/>
             <p><button type="submit" class="btn btn-dark">Salvar</button></p>
         </form>
     </div>
