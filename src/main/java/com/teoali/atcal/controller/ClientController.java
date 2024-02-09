@@ -1,9 +1,12 @@
 package com.teoali.atcal.controller;
 
+import com.teoali.atcal.config.MyUserPrincipal;
 import com.teoali.atcal.domain.Client;
+import com.teoali.atcal.domain.User;
 import com.teoali.atcal.repository.ClientRepository;
 import com.teoali.atcal.repository.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +26,8 @@ public class ClientController {
   private GroupRepository groupRepository;
 
   @GetMapping
-  public String list(Model model) {
-    model.addAttribute("clients", clientRepository.findAll());
+  public String list(Model model, Authentication authentication) {
+    model.addAttribute("clients", clientRepository.findByUser(getUser(authentication)));
     return "clients/list";
   }
 
@@ -36,7 +39,8 @@ public class ClientController {
   }
 
   @PostMapping("/create")
-  public String create(@ModelAttribute Client client) {
+  public String create(@ModelAttribute Client client, Authentication authentication) {
+    client.setUser(getUser(authentication));
     clientRepository.save(client);
     return "redirect:/clients";
   }
@@ -59,5 +63,9 @@ public class ClientController {
   public String delete(@PathVariable Long id) {
     clientRepository.deleteById(id);
     return "redirect:/clients";
+  }
+
+  private User getUser(Authentication authentication) {
+    return ((MyUserPrincipal) authentication.getPrincipal()).getUser();
   }
 }

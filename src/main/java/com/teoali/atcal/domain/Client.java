@@ -24,6 +24,10 @@ public class Client {
   @JoinColumn(name = "group_id")
   private Group group;
 
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "user_id")
+  private User user;
+
   public Long getId() {
     return id;
   }
@@ -46,5 +50,13 @@ public class Client {
 
   public void setGroup(Group group) {
     this.group = group;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
   }
 }

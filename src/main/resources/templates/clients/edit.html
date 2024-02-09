@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Cliente</title>
-</head>
+<html>
+
+<head th:replace="~{layoutBase :: head}"></head>
+
 <body>
-<h2>Editar Cliente</h2>
-<form th:object="${client}" th:action="@{/clients/edit/{id}(id=${client.id})}" method="post">
-    <label>Nome: <input type="text" th:field="*{name}" /></label><br/>
-    <input type="submit" value="Salvar"/>
-</form>
-<p><a th:href="@{/clients}">Voltar para a lista de cliente</a></p>
+    <div th:replace="~{layoutBase :: navbar}"></div>
+    <div class="container">
+        <h1 class="mb-3">Editar Cliente</h1>
+        <form th:object="${client}" th:action="@{/clients/edit/{id}(id=${client.id})}" method="post">
+            <label>Nome: <input type="text" th:field="*{name}" /></label>
+            <br/>
+            <p><button type="submit" class="btn btn-dark">Salvar</button></p>
+        </form>
+    </div>
+    <p><a th:href="@{/clients}">Voltar para a lista de cliente</a></p>
 </body>
 </html>

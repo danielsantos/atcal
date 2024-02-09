@@ -5,11 +5,14 @@
 </head>
 
 <body>
-<h2>Editar Grupo</h2>
-<form th:object="${group}" th:action="@{/groups/edit/{id}(id=${group.id})}" method="post">
-    <label>Nome: <input type="text" th:field="*{name}" /></label><br/>
-    <input type="submit" value="Salvar"/>
-</form>
-<p><a th:href="@{/groups}">Voltar para a lista de grupos</a></p>
+    <div th:replace="~{layoutBase :: navbar}"></div>
+    <div class="container">
+        <h1 class="mb-3">Editar Grupo</h1>
+        <form th:object="${group}" th:action="@{/groups/edit/{id}(id=${group.id})}" method="post">
+            <label>Nome: <input type="text" th:field="*{name}" /></label><br/>
+            <p><button type="submit" class="btn btn-dark">Salvar</button></p>
+        </form>
+    </div>
+    <p><a th:href="@{/groups}">Voltar para a lista de grupos</a></p>
 </body>
 </html>
