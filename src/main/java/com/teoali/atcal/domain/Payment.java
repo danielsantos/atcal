@@ -1,5 +1,6 @@
 package com.teoali.atcal.domain;
 
+import com.teoali.atcal.domain.enums.Status;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -29,7 +30,7 @@ public class Payment {
   private LocalDate payDate;
 
   @Column
-  private String status;
+  private int status;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "client_id")
@@ -59,14 +60,6 @@ public class Payment {
     this.client = client;
   }
 
-  public String getStatus() {
-    return status;
-  }
-
-  public void setStatus(String status) {
-    this.status = status;
-  }
-
   public LocalDate getDueDate() {
     return dueDate;
   }
@@ -81,5 +74,17 @@ public class Payment {
 
   public void setPayDate(LocalDate payDate) {
     this.payDate = payDate;
+  }
+
+  public int getStatus() {
+      return status;
+  }
+
+  public void setStatus(int status) {
+      this.status = status;
+  }
+
+  public String getStatusDescription() {
+    return Status.fromId(status).getDescription();
   }
 }

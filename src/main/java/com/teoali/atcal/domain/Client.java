@@ -9,6 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "clients")
@@ -27,6 +29,15 @@ public class Client {
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id")
   private User user;
+
+  @Transient
+  private BigDecimal amount;
+
+  @Transient
+  private Integer dueDay;
+
+  @Transient
+  private Integer paymentMultiplier;
 
   public Long getId() {
     return id;
@@ -58,5 +69,29 @@ public class Client {
 
   public void setUser(User user) {
     this.user = user;
+  }
+
+  public BigDecimal getAmount() {
+    return amount;
+  }
+
+  public void setAmount(BigDecimal amount) {
+    this.amount = amount;
+  }
+
+  public Integer getDueDay() {
+    return dueDay;
+  }
+
+  public void setDueDay(Integer dueDay) {
+    this.dueDay = dueDay;
+  }
+
+  public Integer getPaymentMultiplier() {
+    return paymentMultiplier;
+  }
+
+  public void setPaymentMultiplier(Integer paymentMultiplier) {
+    this.paymentMultiplier = paymentMultiplier;
   }
 }

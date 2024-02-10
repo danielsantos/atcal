@@ -2,9 +2,14 @@ package com.teoali.atcal.controller;
 
 import com.teoali.atcal.config.MyUserPrincipal;
 import com.teoali.atcal.domain.Client;
+import com.teoali.atcal.domain.Payment;
 import com.teoali.atcal.domain.User;
+import com.teoali.atcal.domain.enums.Status;
 import com.teoali.atcal.repository.ClientRepository;
 import com.teoali.atcal.repository.GroupRepository;
+import com.teoali.atcal.repository.PaymentRepository;
+import java.time.LocalDate;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -25,6 +30,9 @@ public class ClientController {
   @Autowired
   private GroupRepository groupRepository;
 
+  @Autowired
+  private PaymentRepository paymentRepository;
+
   @GetMapping
   public String list(Model model, Authentication authentication) {
     model.addAttribute("clients", clientRepository.findByUser(getUser(authentication)));
@@ -41,7 +49,28 @@ public class ClientController {
   @PostMapping("/create")
   public String create(@ModelAttribute Client client, Authentication authentication) {
     client.setUser(getUser(authentication));
-    clientRepository.save(client);
+    Client savedClient = clientRepository.save(client);
+
+    for (int i = 0; i < client.getPaymentMultiplier(); i++) {
+      Payment payment = new Payment();
+      payment.setClient(savedClient);
+      payment.setAmount(client.getAmount());
+      payment.setStatus(Status.EM_ABERTO.getId());
+
+      LocalDate currentDate = LocalDate.now();
+      LocalDate dueDate = LocalDate.of(currentDate.getYear(), currentDate.getMonth(), client.getDueDay());
+      if (dueDate.isBefore(currentDate) || dueDate.isEqual(currentDate)) {
+        dueDate = dueDate.plusMonths(1);
+      }
+
+      if (i != 0) {
+        dueDate = dueDate.plusMonths(i);
+      }
+
+      payment.setDueDate(dueDate);
+      paymentRepository.save(payment);
+    }
+
     return "redirect:/clients";
   }
 
@@ -63,6 +92,16 @@ public class ClientController {
 
   @GetMapping("/delete/{id}")
   public String delete(@PathVariable Long id) {
+
+    Client client = new Client();
+    client.setId(id);
+
+    List<Payment> paymentList = paymentRepository.findByClient(client);
+
+    for (Payment payment : paymentList) {
+      paymentRepository.delete(payment);
+    }
+    
     clientRepository.deleteById(id);
     return "redirect:/clients";
   }
