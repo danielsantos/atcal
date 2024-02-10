@@ -4,11 +4,15 @@
 <body>
 <div th:replace="~{layoutBase :: navbar}"></div>
 <div class="container mb-2">
-<!--
-<p><a th:href="@{/users}"><button class="btn btn-dark">Usuários</button></a></p>
-<p><a th:href="@{/clients}"><button class="btn btn-dark">Clientes</button></a></p>
-<p><a th:href="@{/groups}"><button class="btn btn-dark">Grupos</button></a></p>
--->
+    <h1 class="mb-3">Bem Vindo <span th:text="${user.name}" /></h1>
+    <br/>
+    Quantidade de clientes ativos: XXX <a href="">VER</a>
+    <br/><br/>
+    Projeção de valor total a receber no mês atual: R$ XXXX,XX <a href="">VER</a>
+    <br/><br/>
+    Projeção de valor total a receber no mês seguinte: R$ XXXX,XX <a href="">VER</a>
+    <br/><br/>
+    Quantidade de clientes com mensalidades vencidas: ------ <a href="">VER</a>
 </div>
 </body>
 </html>
