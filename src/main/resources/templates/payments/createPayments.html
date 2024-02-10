@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head th:replace="~{layoutBase :: head}">
+</head>
+
+<body>
+    <div th:replace="~{layoutBase :: navbar}"></div>
+    <div class="container">
+        <h1 class="mb-3">Adicionar Mensalidades</h1>
+
+        <h4>Nome: <span th:text="${client.name}" /></h4>
+        <br/>
+        <h4>Grupo: <span th:text="${client.group?.name}" /></h4>
+        <br/>
+
+        <form th:object="${client}" th:action="@{/payments/create/{id}(id=${client.id})}" method="post">
+            <label>Valor da Mensalidade: <input type="text" th:field="*{amount}" /></label>
+            <br/>
+            <label>Dia do Vencimento: <input type="text" th:field="*{dueDay}" /></label>
+            <br/>
+            <label>Quantas Mensalidades a Cadastrar:
+                <select th:field="*{paymentMultiplier}">
+                    <option value="12">12</option>
+                    <option value="11">11</option>
+                    <option value="10">10</option>
+                    <option value="9">9</option>
+                    <option value="8">8</option>
+                    <option value="7">7</option>
+                    <option value="6">6</option>
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                </select>
+            </label>
+            <br/>
+
+            <p><button type="submit" class="btn btn-dark">Salvar</button></p>
+        </form>
+    </div>
+     <p><a th:href="@{/clients}">Voltar para a lista de clientes</a></p>
+</body>
+</html>

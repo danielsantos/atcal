@@ -23,20 +23,21 @@
             <tr th:each="payment : ${payments}">
                 <td th:text="${#temporals.format(payment.dueDate, 'dd/MM/yyyy')}"></td>
                 <td th:text="${payment.amount}"></td>
-                <td th:text="${payment.payDate} ?: '-'" />
+<!--                <td th:text="${payment.payDate} ?: '-'" />-->
+                <td th:text="${#temporals.format(payment.payDate, 'dd/MM/yyyy')} ?: '-'"></td>
                 <th:block th:switch="${payment.statusDescription}">
                     <td th:case="'EM ABERTO'" style="background-color: #b7b740; color: white; text-align: center" th:text="${payment.statusDescription}"></td>
                     <td th:case="'PAGO'" style="background-color: #559355; color: white; text-align: center" th:text="${payment.statusDescription}"></td>
                     <td th:case="'VENCIDO'" style="background-color: #af6b6b; color: white; text-align: center" th:text="${payment.statusDescription}"></td>
                 </th:block>
                 <td class="buttons ">
-                    <a th:href="@{/payments/paid_out/{id}(id=${payment.id})}" th:method="get" class="btn btn-success"><i class="fa fa-money"></i></a>
-<!--                    <a th:href="@{/clients/edit/{id}(id=${client.id})}" th:method="get" class="btn btn-warning"><i class="fa fa-pencil"></i></a>-->
+                    <a th:if="${payment.statusDescription == 'EM ABERTO'}" th:href="@{/payments/paid_out/{id}(id=${payment.id})}" th:method="get" class="btn btn-success"><i class="fa fa-money"></i></a>
+                    <a th:href="@{/payments/edit/{id}(id=${payment.id})}" th:method="get" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
                     <a th:href="@{/payments/delete/{id}(id=${payment.id})}" th:method="delete" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                 </td>
             </tr>
         </table>
-        <p><a th:href="@{/clients/create}"><button class="btn btn-dark">Adicionar mensalidades</button></a></p>
+        <p><a th:href="@{/payments/create/{id}(id=${client.id})}"><button class="btn btn-dark">Adicionar mensalidades</button></a></p>
     </div>
 </body>
 </html>

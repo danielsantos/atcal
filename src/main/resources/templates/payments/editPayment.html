@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head th:replace="~{layoutBase :: head}"></head>
+
+<body>
+    <div th:replace="~{layoutBase :: navbar}"></div>
+    <div class="container">
+        <h1 class="mb-3">Editar Mensalidade</h1>
+        <form th:object="${payment}" th:action="@{/payments/edit/{id}(id=${payment.id})}" method="post">
+            <label>Vencimento: <input type="text" th:field="*{dueDate}" /></label>
+            <label>Data do Pagamento: <input type="text" th:field="*{payDate}" /></label>
+            <label>Valor: <input type="text" th:field="*{amount}" /></label>
+            <br/>
+            <label>Status:
+                <select th:field="*{status}">
+                    <option value="0">EM ABERTO</option>
+                    <option value="1">PAGO</option>
+                    <option value="2">VENCIDO</option>
+                </select>
+            </label>
+            <br/>
+            <p><button type="submit" class="btn btn-dark">Salvar</button></p>
+        </form>
+    </div>
+    <p><a th:href="@{/payments/list/${payment.client.id}}">Voltar para a lista de mensalidades</a></p>
+</body>
+</html>
