@@ -1,0 +1,38 @@
+<head th:replace="~{layoutBase :: head}"></head>
+
+<body>
+    <div th:replace="~{layoutBase :: navbar}"></div>
+    <div class="container mb-2">
+        <h1>Mensalidades de Cliente</h1>
+
+        <br/>
+
+        <h4>Nome: <span th:text="${client.name}" /></h4>
+        <br/>
+        <h4>Grupo: <span th:text="${client.group?.name}" /></h4>
+        <br/>
+
+        <table class="table table-light">
+            <tr class="table-dark">
+                <th>Vencimento</th>
+                <th>Valor</th>
+                <th>Data do Pagamento</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+            <tr th:each="payment : ${payment}">
+                <td>A</td>
+                <td>A</td>
+                <td>A</td>
+                <td>A</td>
+                <td class="buttons ">
+<!--                    <a th:href="@{/clients/edit/{id}(id=${client.id})}" th:method="get" class="btn btn-success"><i class="fa fa-money"></i></a>-->
+<!--                    <a th:href="@{/clients/edit/{id}(id=${client.id})}" th:method="get" class="btn btn-warning"><i class="fa fa-pencil"></i></a>-->
+<!--                    <a th:href="@{/clients/delete/{id}(id=${client.id})}" th:method="delete" class="btn btn-danger"><i class="fa fa-trash"></i></a>-->
+                </td>
+            </tr>
+        </table>
+        <p><a th:href="@{/clients/create}"><button class="btn btn-dark">Adicionar mensalidades</button></a></p>
+    </div>
+</body>
+</html>
