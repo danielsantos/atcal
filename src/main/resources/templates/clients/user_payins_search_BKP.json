@@ -1,0 +1,58 @@
+{
+    "id": "user_payins_search",
+    "address": {
+        "method": "GET",
+        "domain": "internal.mercadopago.com",
+        "route": "/v2/payins/search"
+    },
+    "type": "API",
+    "content": {
+        "query_string": {
+            "collector.id": "{{user_id}}",
+            "limit": "{{limit}}",
+            "offset": "{{offset}}",
+            "status": "{?{status}}",
+            "end": "{?{end_date}}",
+            "begin": "{?{begin_date}}",
+            "range_by": "{?{range}}",
+            "payment_id": "{?{payment_id}}",
+            "sort_by": "date_created",
+            "type": "payin",
+            "order": "desc",
+            "flow": "{?{flow}}",
+            "site": "{?{site}}",
+            "site_id": "{?{site}}"
+        },
+        "headers": null,
+        "body": null
+    },
+    "metadata": {
+        "list": {
+            "result_path": "$",
+            "result_fields": [
+                "results"
+            ]
+        },
+        "query_params": null
+    },
+    "query": null,
+    "query_count": null,
+    "query_result": null,
+    "project_id": null,
+    "resilience": {
+        "max_attempts": 1,
+        "wait_duration": 100,
+        "timeout": 5000
+    },
+    "cache": null,
+    "parameters": [
+        "{{offset}}",
+        "{{limit}}",
+        "{{user_id}}"
+    ],
+    "required_parameters_without_curly_braces": [
+        "offset",
+        "user_id",
+        "limit"
+    ]
+}

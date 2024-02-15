@@ -6,7 +6,7 @@
 <div class="container mb-2">
     <h1 class="mb-3">Bem Vindo <span th:text="${user.name}" /></h1>
     <br/>
-    Quantidade de clientes ativos: XXX <a href="">VER</a>
+    Quantidade de clientes ativos: <span th:text="${home.quantityClients}" /> <a th:href="@{/clients}">VER</a>
     <br/><br/>
     Projeção de valor total a receber no mês atual: R$ XXXX,XX <a href="">VER</a>
     <br/><br/>

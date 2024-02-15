@@ -2,11 +2,13 @@ package com.teoali.atcal.controller;
 
 import com.teoali.atcal.config.MyUserPrincipal;
 import com.teoali.atcal.domain.Client;
+import com.teoali.atcal.domain.Home;
 import com.teoali.atcal.domain.User;
 import com.teoali.atcal.repository.ClientRepository;
 import com.teoali.atcal.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -22,10 +24,18 @@ public class HomeController {
   @Autowired
   private UserRepository userRepository;
 
+  @Autowired
+  private ClientRepository clientRepository;
+
   @GetMapping
   public String home(Model model, Authentication authentication) {
     User user = userRepository.findById(getUser(authentication).getId()).orElseThrow(() -> new IllegalArgumentException("Invalid user"));
+
+    Home home = new Home();
+    home.setQuantityClients(clientRepository.findByUser(user).size());
+
     model.addAttribute("user", user);
+    model.addAttribute("home", home);
     return "home/index";
   }
 
