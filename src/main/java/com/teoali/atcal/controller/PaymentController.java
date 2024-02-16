@@ -110,8 +110,42 @@ public class PaymentController {
     return "payments/listClientsWithDebt";
   }
 
+  @GetMapping("/list/receive/actual/month")
+  public String listPaymentsToReceiveActualMonth(Model model, Authentication authentication) {
+    model.addAttribute("payments", paymentRepository.getPaymentsToReceive(getUser(authentication).getId(), firstDayOfMonth(), lastDayOfMonth()));
+    model.addAttribute("totalAmount", paymentRepository.getSumAmountToReceive(getUser(authentication).getId(), firstDayOfMonth(), lastDayOfMonth()));
+    model.addAttribute("firstDayMonth", firstDayOfMonth());
+    return "payments/listPaymentsToReceive";
+  }
+
+  @GetMapping("/list/receive/next/month")
+  public String listPaymentsToReceiveNextMonth(Model model, Authentication authentication) {
+    model.addAttribute("payments", paymentRepository.getPaymentsToReceive(getUser(authentication).getId(), firstDayOfNextMonth(), lastDayOfNextMonth()));
+    model.addAttribute("totalAmount", paymentRepository.getSumAmountToReceive(getUser(authentication).getId(), firstDayOfNextMonth(), lastDayOfNextMonth()));
+    model.addAttribute("firstDayMonth", firstDayOfNextMonth());
+    return "payments/listPaymentsToReceive";
+  }
+
   private User getUser(Authentication authentication) {
     return ((MyUserPrincipal) authentication.getPrincipal()).getUser();
+  }
+
+  // TODO UNIFY THIS METHOD ON ALL CONTROLLERS
+  private LocalDate firstDayOfMonth() {
+    return LocalDate.now().withDayOfMonth(1);
+  }
+
+  // TODO UNIFY THIS METHOD ON ALL CONTROLLERS
+  private LocalDate lastDayOfMonth() {
+    return LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth());
+  }
+
+  private LocalDate firstDayOfNextMonth() {
+    return LocalDate.now().plusMonths(1).withDayOfMonth(1);
+  }
+
+  private LocalDate lastDayOfNextMonth() {
+      return LocalDate.now().plusMonths(1).withDayOfMonth(LocalDate.now().lengthOfMonth());
   }
 
 }

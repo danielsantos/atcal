@@ -1,0 +1,30 @@
+<head th:replace="~{layoutBase :: head}"></head>
+
+<body>
+    <div th:replace="~{layoutBase :: navbar}"></div>
+    <div class="container mb-2">
+        <h1>Mensalidades a Receber - Mês: <span th:text="${#temporals.format(firstDayMonth, 'MM/yyyy')} ?: '-'"/></h1>
+        <br/>
+        <table class="table table-light">
+            <tr class="table-dark">
+                <th>ID do Cliente</th>
+                <th>Cliente</th>
+                <th>Valor da Mensalidade</th>
+                <th>Data do Vencimento</th>
+                <th>Ações</th>
+            </tr>
+            <tr th:each="payment : ${payments}">
+                <td th:text="${payment.client.id}"></td>
+                <td th:text="${payment.client.name}"></td>
+                <td>R$ <span th:text="${payment.amount}" /></td>
+                <td th:text="${#temporals.format(payment.dueDate, 'dd/MM/yyyy')} ?: '-'"></td>
+                <td class="buttons ">
+                    <a th:href="@{/payments/edit/{id}(id=${payment.id})}" th:method="get" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                </td>
+            </tr>
+        </table>
+        <br/>
+        <h1>Total: R$ <span th:text="${totalAmount}" /></h1>
+    </div>
+</body>
+</html>

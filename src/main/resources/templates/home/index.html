@@ -8,9 +8,9 @@
     <br/>
     Quantidade de clientes ativos: <span th:text="${home.quantityClients}" /> <a th:href="@{/clients}">VER</a>
     <br/><br/>
-    Projeção de valor total a receber no mês atual: R$ XXXX,XX <a href="">VER</a>
+    Projeção de valor total a receber no mês atual: R$ <span th:text="${home.sumAmountToReceiveActualMonth} ?: 'R$ 0,00'" /> <a th:href="@{/payments/list/receive/actual/month}">VER</a>
     <br/><br/>
-    Projeção de valor total a receber no mês seguinte: R$ XXXX,XX <a href="">VER</a>
+    Projeção de valor total a receber no mês seguinte: R$ <span th:text="${home.sumAmountToReceiveNextMonth} ?: 'R$ 0,00'" /> <a th:href="@{/payments/list/receive/next/month}">VER</a>
     <br/><br/>
     Quantidade de clientes com mensalidades vencidas: <span th:text="${home.quantityClientsWithDebts}" /> <a th:href="@{/payments/list/clients/debt}">VER</a>
 </div>
