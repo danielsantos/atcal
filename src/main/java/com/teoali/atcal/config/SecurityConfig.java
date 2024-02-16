@@ -20,11 +20,12 @@ public class SecurityConfig {
     return http.csrf().disable()
         .authorizeHttpRequests()
         .requestMatchers("/auth/welcome").permitAll()
+        .requestMatchers("/register").permitAll()
         .and()
         .authorizeHttpRequests().requestMatchers("/**").authenticated()
         .and()
         .authorizeHttpRequests().requestMatchers("/**").authenticated()
-        .and().formLogin()
+        .and().formLogin().loginPage("/login").permitAll()
         .and().build();
   }
 

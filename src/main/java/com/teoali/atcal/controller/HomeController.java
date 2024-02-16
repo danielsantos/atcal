@@ -45,6 +45,16 @@ public class HomeController {
     return "home/index";
   }
 
+  @GetMapping("/login")
+  public String login() {
+    return "home/login";
+  }
+
+  @GetMapping("/register")
+  public String register() {
+    return "home/register";
+  }
+
   @GetMapping("/logout")
   public String performLogout(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
     this.logoutHandler.logout(request, response, authentication);
