@@ -5,6 +5,7 @@ import com.teoali.atcal.domain.Client;
 import com.teoali.atcal.domain.Home;
 import com.teoali.atcal.domain.User;
 import com.teoali.atcal.repository.ClientRepository;
+import com.teoali.atcal.repository.PaymentRepository;
 import com.teoali.atcal.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,12 +28,16 @@ public class HomeController {
   @Autowired
   private ClientRepository clientRepository;
 
+  @Autowired
+  private PaymentRepository paymentRepository;
+
   @GetMapping
   public String home(Model model, Authentication authentication) {
     User user = userRepository.findById(getUser(authentication).getId()).orElseThrow(() -> new IllegalArgumentException("Invalid user"));
 
     Home home = new Home();
     home.setQuantityClients(clientRepository.findByUser(user).size());
+    home.setQuantityClientsWithDebts(paymentRepository.getDebtPayments(user.getId()).size());
 
     model.addAttribute("user", user);
     model.addAttribute("home", home);

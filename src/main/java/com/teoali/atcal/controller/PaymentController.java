@@ -1,7 +1,9 @@
 package com.teoali.atcal.controller;
 
+import com.teoali.atcal.config.MyUserPrincipal;
 import com.teoali.atcal.domain.Client;
 import com.teoali.atcal.domain.Payment;
+import com.teoali.atcal.domain.User;
 import com.teoali.atcal.domain.enums.Status;
 import com.teoali.atcal.repository.ClientRepository;
 import com.teoali.atcal.repository.PaymentRepository;
@@ -101,4 +103,15 @@ public class PaymentController {
     paymentRepository.deleteById(id);
     return "redirect:/payments/list/" + payment.getClient().getId();
   }
+
+  @GetMapping("/list/clients/debt")
+  public String listClientsWithDebt(Model model, Authentication authentication) {
+    model.addAttribute("payments", paymentRepository.getDebtPayments(getUser(authentication).getId()));
+    return "payments/listClientsWithDebt";
+  }
+
+  private User getUser(Authentication authentication) {
+    return ((MyUserPrincipal) authentication.getPrincipal()).getUser();
+  }
+
 }

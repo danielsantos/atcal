@@ -12,7 +12,7 @@
     <br/><br/>
     Projeção de valor total a receber no mês seguinte: R$ XXXX,XX <a href="">VER</a>
     <br/><br/>
-    Quantidade de clientes com mensalidades vencidas: ------ <a href="">VER</a>
+    Quantidade de clientes com mensalidades vencidas: <span th:text="${home.quantityClientsWithDebts}" /> <a th:href="@{/payments/list/clients/debt}">VER</a>
 </div>
 </body>
 </html>

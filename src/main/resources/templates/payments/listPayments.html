@@ -22,7 +22,7 @@
             </tr>
             <tr th:each="payment : ${payments}">
                 <td th:text="${#temporals.format(payment.dueDate, 'dd/MM/yyyy')}"></td>
-                <td th:text="${payment.amount}"></td>
+                <td>R$ <span th:text="${payment.amount}" /></td>
 <!--                <td th:text="${payment.payDate} ?: '-'" />-->
                 <td th:text="${#temporals.format(payment.payDate, 'dd/MM/yyyy')} ?: '-'"></td>
                 <th:block th:switch="${payment.statusDescription}">
