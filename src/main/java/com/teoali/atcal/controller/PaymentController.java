@@ -29,8 +29,13 @@ public class PaymentController {
   private PaymentRepository paymentRepository;
 
   @GetMapping("/create/{id}")
-  public String createForm(@PathVariable Long id, Model model) {
-    model.addAttribute("client", clientRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid client Id: " + id)));
+  public String createForm(@PathVariable Long id, Model model, Authentication authentication) {
+    Client client = clientRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid client Id: " + id));
+    if (!client.getUser().getId().equals(getUser(authentication).getId())) {
+      return "home/notFound";
+    }
+
+    model.addAttribute("client", client);
     model.addAttribute("payment", new Payment());
     return "payments/createPayments";
   }
@@ -61,8 +66,12 @@ public class PaymentController {
   }
 
   @GetMapping("/list/{id}")
-  public String list(@PathVariable Long id, Model model) {
+  public String list(@PathVariable Long id, Model model, Authentication authentication) {
     Client client = clientRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid client Id: " + id));
+    if (!client.getUser().getId().equals(getUser(authentication).getId())) {
+      return "home/notFound";
+    }
+
     model.addAttribute("client", client);
     model.addAttribute("payments", paymentRepository.findByClient(client));
 
@@ -70,8 +79,12 @@ public class PaymentController {
   }
 
   @GetMapping("/edit/{id}")
-  public String editForm(@PathVariable Long id, Model model) {
+  public String editForm(@PathVariable Long id, Model model, Authentication authentication) {
     Payment payment = paymentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid payment Id:" + id));
+    if (!payment.getClient().getUser().getId().equals(getUser(authentication).getId())) {
+      return "home/notFound";
+    }
+
     Client client = clientRepository.findById(payment.getClient().getId()).orElseThrow(() -> new IllegalArgumentException("Invalid client Id:" + payment.getClient().getId()));
     model.addAttribute("client", client);
     model.addAttribute("payment", payment);
@@ -89,8 +102,12 @@ public class PaymentController {
   }
 
   @GetMapping("/paid_out/{id}")
-  public String paidOut(@PathVariable Long id) {
+  public String paidOut(@PathVariable Long id, Authentication authentication) {
     Payment payment = paymentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid payment Id:" + id));
+    if (!payment.getClient().getUser().getId().equals(getUser(authentication).getId())) {
+      return "home/notFound";
+    }
+
     payment.setStatus(Status.PAGO.getId());
     payment.setPayDate(LocalDate.now());
     paymentRepository.save(payment);
@@ -98,8 +115,12 @@ public class PaymentController {
   }
 
   @GetMapping("/delete/{id}")
-  public String delete(@PathVariable Long id) {
+  public String delete(@PathVariable Long id, Authentication authentication) {
     Payment payment = paymentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid payment Id:" + id));
+    if (!payment.getClient().getUser().getId().equals(getUser(authentication).getId())) {
+      return "home/notFound";
+    }
+
     paymentRepository.deleteById(id);
     return "redirect:/payments/list/" + payment.getClient().getId();
   }
@@ -126,16 +147,15 @@ public class PaymentController {
     return "payments/listPaymentsToReceive";
   }
 
+  // TODO UNIFY THIS METHOD ON ALL CONTROLLERS
   private User getUser(Authentication authentication) {
     return ((MyUserPrincipal) authentication.getPrincipal()).getUser();
   }
 
-  // TODO UNIFY THIS METHOD ON ALL CONTROLLERS
   private LocalDate firstDayOfMonth() {
     return LocalDate.now().withDayOfMonth(1);
   }
 
-  // TODO UNIFY THIS METHOD ON ALL CONTROLLERS
   private LocalDate lastDayOfMonth() {
     return LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth());
   }
@@ -147,5 +167,6 @@ public class PaymentController {
   private LocalDate lastDayOfNextMonth() {
       return LocalDate.now().plusMonths(1).withDayOfMonth(LocalDate.now().lengthOfMonth());
   }
+  // TODO UNIFY THIS METHOD ON ALL CONTROLLERS
 
 }

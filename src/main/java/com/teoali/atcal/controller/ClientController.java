@@ -77,6 +77,10 @@ public class ClientController {
   @GetMapping("/edit/{id}")
   public String editForm(@PathVariable Long id, Model model, Authentication authentication) {
     Client client = clientRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid client Id: " + id));
+    if (!client.getUser().getId().equals(getUser(authentication).getId())) {
+      return "home/notFound";
+    }
+
     model.addAttribute("client", client);
     model.addAttribute("groups", groupRepository.findByUser(getUser(authentication)));
     return "clients/edit";
@@ -91,10 +95,11 @@ public class ClientController {
   }
 
   @GetMapping("/delete/{id}")
-  public String delete(@PathVariable Long id) {
-
-    Client client = new Client();
-    client.setId(id);
+  public String delete(@PathVariable Long id, Authentication authentication) {
+    Client client = clientRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid client Id: " + id));
+    if (!client.getUser().getId().equals(getUser(authentication).getId())) {
+      return "home/notFound";
+    }
 
     List<Payment> paymentList = paymentRepository.findByClient(client);
 

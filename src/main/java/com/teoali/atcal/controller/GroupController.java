@@ -43,8 +43,12 @@ public class GroupController {
   }
 
   @GetMapping("/edit/{id}")
-  public String editForm(@PathVariable Long id, Model model) {
+  public String editForm(@PathVariable Long id, Model model, Authentication authentication) {
     Group group = groupRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid group Id: " + id));
+    if (!group.getUser().getId().equals(getUser(authentication).getId())) {
+      return "home/notFound";
+    }
+
     model.addAttribute("group", group);
     return "groups/edit";
   }
@@ -58,7 +62,12 @@ public class GroupController {
   }
 
   @GetMapping("/delete/{id}")
-  public String delete(@PathVariable Long id) {
+  public String delete(@PathVariable Long id, Authentication authentication) {
+    Group group = groupRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid group Id: " + id));
+    if (!group.getUser().getId().equals(getUser(authentication).getId())) {
+      return "home/notFound";
+    }
+
     groupRepository.deleteById(id);
     return "redirect:/groups";
   }

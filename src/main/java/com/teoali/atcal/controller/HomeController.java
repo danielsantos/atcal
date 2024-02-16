@@ -51,16 +51,15 @@ public class HomeController {
     return "redirect:/clients";
   }
 
+  // TODO UNIFY THIS METHOD ON ALL CONTROLLERS
   private User getUser(Authentication authentication) {
     return ((MyUserPrincipal) authentication.getPrincipal()).getUser();
-  } // TODO UNIFY THIS METHOD ON ALL CONTROLLERS
+  }
 
-  // TODO UNIFY THIS METHOD ON ALL CONTROLLERS
   private LocalDate firstDayOfMonth() {
     return LocalDate.now().withDayOfMonth(1);
   }
 
-  // TODO UNIFY THIS METHOD ON ALL CONTROLLERS
   private LocalDate lastDayOfMonth() {
     return LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth());
   }
@@ -72,5 +71,6 @@ public class HomeController {
   private LocalDate lastDayOfNextMonth() {
     return LocalDate.now().plusMonths(1).withDayOfMonth(LocalDate.now().lengthOfMonth());
   }
+  // TODO UNIFY THIS METHOD ON ALL CONTROLLERS
 
 }
