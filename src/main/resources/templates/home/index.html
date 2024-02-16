@@ -4,15 +4,28 @@
 <body>
 <div th:replace="~{layoutBase :: navbar}"></div>
 <div class="container mb-2">
-    <h1 class="mb-3">Bem Vindo <span th:text="${user.name}" /></h1>
-    <br/>
-    Quantidade de clientes ativos: <span th:text="${home.quantityClients}" /> <a th:href="@{/clients}">VER</a>
-    <br/><br/>
-    Projeção de valor total a receber no mês atual: R$ <span th:text="${home.sumAmountToReceiveActualMonth} ?: 'R$ 0,00'" /> <a th:href="@{/payments/list/receive/actual/month}">VER</a>
-    <br/><br/>
-    Projeção de valor total a receber no mês seguinte: R$ <span th:text="${home.sumAmountToReceiveNextMonth} ?: 'R$ 0,00'" /> <a th:href="@{/payments/list/receive/next/month}">VER</a>
-    <br/><br/>
-    Quantidade de clientes com mensalidades vencidas: <span th:text="${home.quantityClientsWithDebts}" /> <a th:href="@{/payments/list/clients/debt}">VER</a>
+    <div class="home" style="text-align: center;">
+        <h1 class="mb-3">Bem Vindo <span th:text="${user.name}" /></h1>
+        <br/><br/>
+
+        <h2 class="mb-3">Quantidade de clientes ativos:</h2>
+        <h1 class="mb-3"><a th:href="@{/clients}"><span th:text="${home.quantityClients}" /></a></h1>
+
+        <br/>
+
+        <h2 class="mb-3">Quantidade de mensalidades vencidas:</h2>
+        <h1 class="mb-3"><a th:href="@{/payments/list/clients/debt}"><span th:text="${home.quantityClientsWithDebts}" /></a></h1>
+
+        <br/>
+
+        <h2 class="mb-3">Projeção de valor total a receber no mês atual:</h2>
+        <h1 class="mb-3"><a th:href="@{/payments/list/receive/actual/month}">R$ <span th:text="${home.sumAmountToReceiveActualMonth} ?: 'R$ 0,00'" /></a></h1>
+
+        <br/>
+
+        <h2 class="mb-3">Projeção de valor total a receber no mês seguinte:</h2>
+        <h1 class="mb-3"><a th:href="@{/payments/list/receive/next/month}">R$ <span th:text="${home.sumAmountToReceiveNextMonth} ?: 'R$ 0,00'" /></a></h1>
+    </div>
 </div>
 </body>
 </html>
