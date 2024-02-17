@@ -22,4 +22,7 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
   @Query("select p from Payment p inner join Client c on c.id = p.client.id inner join User u on u.id = c.user.id where u.id = ?1 and p.status = 0 and p.dueDate between ?2 and ?3")
   List<Payment> getPaymentsToReceive(Long userId, LocalDate startDate, LocalDate endDate);
 
+  @Query("select p from Payment p where p.dueDate < ?1 and p.status = 0")
+  List<Payment> getPaymentsPastDue(LocalDate currentDate);
+
 }

@@ -8,6 +8,7 @@ import com.teoali.atcal.domain.enums.Status;
 import com.teoali.atcal.repository.ClientRepository;
 import com.teoali.atcal.repository.PaymentRepository;
 import java.time.LocalDate;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -145,6 +146,16 @@ public class PaymentController {
     model.addAttribute("totalAmount", paymentRepository.getSumAmountToReceive(getUser(authentication).getId(), firstDayOfNextMonth(), lastDayOfNextMonth()));
     model.addAttribute("firstDayMonth", firstDayOfNextMonth());
     return "payments/listPaymentsToReceive";
+  }
+
+  @PostMapping("/update/past/due/payments")
+  public void updatePastDuePayments() {
+    List<Payment> payments = paymentRepository.getPaymentsPastDue(LocalDate.now());
+
+    payments.forEach(it -> {
+      it.setStatus(Status.VENCIDO.getId());
+      paymentRepository.save(it);
+    });
   }
 
   // TODO UNIFY THIS METHOD ON ALL CONTROLLERS
