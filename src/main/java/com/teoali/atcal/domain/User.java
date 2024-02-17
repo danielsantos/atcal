@@ -24,6 +24,9 @@ public class User {
   @Column
   private String password;
 
+  @Column
+  private Integer administrator;
+
   public Long getId() {
     return id;
   }
@@ -54,5 +57,13 @@ public class User {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public Integer getAdministrator() {
+    return administrator;
+  }
+
+  public void setAdministrator(Integer administrator) {
+    this.administrator = administrator;
   }
 }

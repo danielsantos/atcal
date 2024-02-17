@@ -11,10 +11,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class HomeController {
@@ -43,6 +46,16 @@ public class HomeController {
     model.addAttribute("user", user);
     model.addAttribute("home", home);
     return "home/index";
+  }
+
+  @PostMapping("/register")
+  public String register(@ModelAttribute User user, Model model) {
+    user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+    userRepository.save(user);
+
+    model.addAttribute("user", user);
+    model.addAttribute("successRegister", true);
+    return "home/login";
   }
 
   @GetMapping("/login")
