@@ -5,6 +5,7 @@ import com.teoali.atcal.domain.Group;
 import com.teoali.atcal.domain.User;
 import com.teoali.atcal.repository.GroupRepository;
 import com.teoali.atcal.service.UserService;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -42,6 +43,7 @@ public class GroupController {
   @PostMapping("/create")
   public String create(@ModelAttribute Group group, Authentication authentication) {
     group.setUser(userService.getUser(authentication));
+    group.setCreatedAt(LocalDateTime.now());
     groupRepository.save(group);
     return "redirect:/groups";
   }
@@ -59,6 +61,9 @@ public class GroupController {
 
   @PostMapping("/edit/{id}")
   public String edit(@PathVariable Long id, @ModelAttribute Group group, Authentication authentication) {
+    Group groupDB = groupRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid group Id: " + id));
+    group.setUpdatedAt(LocalDateTime.now());
+    group.setCreatedAt(groupDB.getCreatedAt());
     group.setId(id);
     group.setUser(userService.getUser(authentication));
     groupRepository.save(group);

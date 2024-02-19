@@ -4,6 +4,7 @@ import com.teoali.atcal.config.MyUserPrincipal;
 import com.teoali.atcal.domain.User;
 import com.teoali.atcal.repository.UserRepository;
 import com.teoali.atcal.service.UserService;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -52,6 +53,7 @@ public class UserController {
       return "home/notFound";
     }
 
+    user.setCreatedAt(LocalDateTime.now());
     userRepository.save(user);
     return "redirect:/users";
   }
@@ -72,7 +74,10 @@ public class UserController {
     if (userService.getUser(authentication).getAdministrator() == null || userService.getUser(authentication).getAdministrator() != 1) {
       return "home/notFound";
     }
+    User userDB = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id: " + id));
 
+    user.setUpdatedAt(LocalDateTime.now());
+    user.setCreatedAt(userDB.getCreatedAt());
     user.setId(id);
     userRepository.save(user);
     return "redirect:/users";

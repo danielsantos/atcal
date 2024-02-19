@@ -1,15 +1,14 @@
 package com.teoali.atcal.controller;
 
-import com.teoali.atcal.config.MyUserPrincipal;
 import com.teoali.atcal.domain.Client;
 import com.teoali.atcal.domain.Payment;
-import com.teoali.atcal.domain.User;
 import com.teoali.atcal.domain.enums.Status;
 import com.teoali.atcal.repository.ClientRepository;
 import com.teoali.atcal.repository.GroupRepository;
 import com.teoali.atcal.repository.PaymentRepository;
 import com.teoali.atcal.service.UserService;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -53,6 +52,7 @@ public class ClientController {
   @PostMapping("/create")
   public String create(@ModelAttribute Client client, Authentication authentication) {
     client.setUser(userService.getUser(authentication));
+    client.setCreatedAt(LocalDateTime.now());
     Client savedClient = clientRepository.save(client);
 
     for (int i = 0; i < client.getPaymentMultiplier(); i++) {
@@ -92,8 +92,11 @@ public class ClientController {
 
   @PostMapping("/edit/{id}")
   public String edit(@PathVariable Long id, @ModelAttribute Client client, Authentication authentication) {
+    Client clientDB = clientRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid client Id: " + id));
     client.setUser(userService.getUser(authentication));
     client.setId(id);
+    client.setCreatedAt(clientDB.getCreatedAt());
+    client.setUpdatedAt(LocalDateTime.now());
     clientRepository.save(client);
     return "redirect:/clients";
   }

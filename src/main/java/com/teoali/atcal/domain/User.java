@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
@@ -26,6 +27,12 @@ public class User {
 
   @Column
   private Integer administrator;
+
+  @Column
+  private LocalDateTime createdAt;
+
+  @Column
+  private LocalDateTime updatedAt;
 
   public Long getId() {
     return id;
@@ -65,5 +72,21 @@ public class User {
 
   public void setAdministrator(Integer administrator) {
     this.administrator = administrator;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public LocalDateTime getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
   }
 }

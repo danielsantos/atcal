@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "clients")
@@ -29,6 +30,12 @@ public class Client {
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id")
   private User user;
+
+  @Column
+  private LocalDateTime createdAt;
+
+  @Column
+  private LocalDateTime updatedAt;
 
   @Transient
   private BigDecimal amount;
@@ -93,5 +100,21 @@ public class Client {
 
   public void setPaymentMultiplier(Integer paymentMultiplier) {
     this.paymentMultiplier = paymentMultiplier;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public LocalDateTime getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
   }
 }

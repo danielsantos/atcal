@@ -9,6 +9,7 @@ import com.teoali.atcal.repository.ClientRepository;
 import com.teoali.atcal.repository.PaymentRepository;
 import com.teoali.atcal.service.UserService;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -64,6 +65,7 @@ public class PaymentController {
       }
 
       payment.setDueDate(dueDate);
+      payment.setCreatedAt(LocalDateTime.now());
       paymentRepository.save(payment);
     }
 
@@ -102,6 +104,8 @@ public class PaymentController {
 
     payment.setId(id);
     payment.setClient(paymentToGetClient.getClient());
+    payment.setUpdatedAt(LocalDateTime.now());
+    payment.setCreatedAt(paymentToGetClient.getCreatedAt());
     paymentRepository.save(payment);
     return "redirect:/payments/list/" + paymentToGetClient.getClient().getId();
   }
@@ -115,6 +119,7 @@ public class PaymentController {
 
     payment.setStatus(Status.PAGO.getId());
     payment.setPayDate(LocalDate.now());
+    payment.setUpdatedAt(LocalDateTime.now());
     paymentRepository.save(payment);
     return "redirect:/payments/list/" + payment.getClient().getId();
   }
