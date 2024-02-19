@@ -7,6 +7,12 @@
     <div th:replace="~{layoutBase :: navbar}"></div>
     <div class="container">
         <h1 class="mb-3">Editar Mensalidade</h1>
+
+        <h4>Nome: <span th:text="${client.name}" /></h4>
+        <br/>
+        <h4>Grupo: <span th:text="${client.group?.name}" /></h4>
+        <br/>
+
         <form th:object="${payment}" th:action="@{/payments/edit/{id}(id=${payment.id})}" method="post">
             <input type="text" th:field="*{dueDate}" id="dueDate" name="dueDate" required class="form-control" placeholder="Vencimento" style="width: 40%">
 
