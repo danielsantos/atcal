@@ -21,7 +21,7 @@ public class ScheduledTasks {
 
 //  @Scheduled(fixedRate = 5000)
 //  @Scheduled(cron = "0 4,6 * * * ?") -- second, minute, hour, day of month, month, day(s) of week
-  @Scheduled(cron = "0 7 * * * ?")
+  @Scheduled(cron = "0 10 1,13 * * ?")
   public void reportCurrentTime() {
     //log.info("The time is now {}", dateFormat.format(new Date()));
     System.out.println("updatePastDuePayments:: BEGIN:: " + dateFormat.format(new Date()));

@@ -15,12 +15,23 @@
         <br/>
 
         <form th:object="${client}" th:action="@{/payments/create/{id}(id=${client.id})}" method="post">
-            <label>Valor da Mensalidade: <input type="text" th:field="*{amount}" /></label>
+
+            <div class="input-group mb-3" style="width: 40%">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">R$</span>
+                </div>
+                <input type="text" id="amount" name="amount" required class="form-control" placeholder="Valor da Mensalidade">
+            </div>
+
             <br/>
-            <label>Dia do Vencimento: <input type="text" th:field="*{dueDay}" /></label>
+
+            <input type="text" id="dueDay" name="dueDay" required class="form-control" placeholder="Dia do Vencimento" style="width: 40%">
+
             <br/>
-            <label>Quantas Mensalidades a Cadastrar:
-                <select th:field="*{paymentMultiplier}">
+
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Quantas Mensalidades a Cadastrar:</label>
+                <select th:field="*{paymentMultiplier}" class="form-select" id="exampleFormControlSelect1" style="width: 5%">
                     <option value="12">12</option>
                     <option value="11">11</option>
                     <option value="10">10</option>
@@ -34,12 +45,14 @@
                     <option value="2">2</option>
                     <option value="1">1</option>
                 </select>
-            </label>
+            </div>
+
             <br/>
 
-            <p><button type="submit" class="btn btn-dark">Salvar</button></p>
+            <p><button type="submit" class="btn btn-primary">Salvar</button></p>
         </form>
+        <p><a th:href="@{/payments/list/{id}(id=${client.id})}">Voltar</a></p>
     </div>
-     <p><a th:href="@{/clients}">Voltar para a lista de clientes</a></p>
+
 </body>
 </html>

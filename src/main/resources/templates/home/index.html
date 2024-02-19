@@ -19,12 +19,12 @@
         <br/>
 
         <h2 class="mb-3">Projeção de valor total a receber no mês atual:</h2>
-        <h1 class="mb-3"><a th:href="@{/payments/list/receive/actual/month}">R$ <span th:text="${home.sumAmountToReceiveActualMonth} ?: 'R$ 0,00'" /></a></h1>
+        <h1 class="mb-3"><a th:href="@{/payments/list/receive/actual/month}">R$ <span th:text="${home.sumAmountToReceiveActualMonth} ?: ' 0,00'" /></a></h1>
 
         <br/>
 
         <h2 class="mb-3">Projeção de valor total a receber no mês seguinte:</h2>
-        <h1 class="mb-3"><a th:href="@{/payments/list/receive/next/month}">R$ <span th:text="${home.sumAmountToReceiveNextMonth} ?: 'R$ 0,00'" /></a></h1>
+        <h1 class="mb-3"><a th:href="@{/payments/list/receive/next/month}">R$ <span th:text="${home.sumAmountToReceiveNextMonth} ?: ' 0,00'" /></a></h1>
     </div>
 </div>
 </body>

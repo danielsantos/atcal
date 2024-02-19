@@ -7,12 +7,15 @@
 <body>
     <div th:replace="~{layoutBase :: navbar}"></div>
     <div class="container">
-        <h1 class="mb-3">Adicionar grupo</h1>
+        <h1 class="mb-3">Adicionar Grupo</h1>
         <form th:object="${group}" th:action="@{/groups/create}" method="post">
-            <label>Nome: <input type="text" th:field="*{name}" /></label><br/>
-            <input type="submit" value="Salvar"/>
+            <input type="text" id="name" name="name" required class="form-control" placeholder="Nome" style="width: 40%">
+
+            <br/>
+
+            <p><button type="submit" class="btn btn-primary">Salvar</button></p>
         </form>
+        <p><a th:href="@{/groups}">Voltar</a></p>
     </div>
-    <p><a th:href="@{/groups}">Voltar para a lista de grupos</a></p>
 </body>
 </html>

@@ -9,21 +9,37 @@
     <div class="container">
         <h1 class="mb-3">Adicionar Cliente</h1>
         <form th:object="${client}" th:action="@{/clients/create}" method="post">
-            <label>Nome: <input type="text" th:field="*{name}" /></label>
+
+            <input type="text" id="name" name="name" required class="form-control" placeholder="Nome" style="width: 40%">
+
             <br/>
-            <label>Grupo:
-                <select th:field="*{group}">
-                    <option value="">-- Selecione --</option>
-                    <option th:each="it : ${groups}" th:value="${it.id}" th:text="${it.name}"></option>
-                </select>
-            </label>
+            <div class="form-group">
+                <label for="exampleFormControlSelect2" style="width: 40%">Grupo:
+                    <select th:field="*{group}" class="form-select" id="exampleFormControlSelect2">
+                        <option value="">-- Selecione --</option>
+                        <option th:each="it : ${groups}" th:value="${it.id}" th:text="${it.name}"></option>
+                    </select>
+                </label>
+            </div>
+
             <br/>
-            <label>Valor da Mensalidade: <input type="text" th:field="*{amount}" /></label>
+
+            <div class="input-group mb-3" style="width: 40%">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">R$</span>
+                </div>
+                <input type="text" id="amount" name="amount" required class="form-control" placeholder="Valor da Mensalidade">
+            </div>
+
             <br/>
-            <label>Dia do Vencimento: <input type="text" th:field="*{dueDay}" /></label>
+
+            <input type="text" id="dueDay" name="dueDay" required class="form-control" placeholder="Dia do Vencimento" style="width: 40%">
+
             <br/>
-            <label>Quantas Mensalidades a Cadastrar:
-                <select th:field="*{paymentMultiplier}">
+
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Quantas Mensalidades a Cadastrar:</label>
+                <select th:field="*{paymentMultiplier}" class="form-select" id="exampleFormControlSelect1" style="width: 5%">
                     <option value="12">12</option>
                     <option value="11">11</option>
                     <option value="10">10</option>
@@ -37,12 +53,13 @@
                     <option value="2">2</option>
                     <option value="1">1</option>
                 </select>
-            </label>
+            </div>
+
             <br/>
 
-            <p><button type="submit" class="btn btn-dark">Salvar</button></p>
+            <p><button type="submit" class="btn btn-primary">Salvar</button></p>
         </form>
+        <p><a th:href="@{/clients}">Voltar</a></p>
     </div>
-     <p><a th:href="@{/clients}">Voltar para a lista de clientes</a></p>
 </body>
 </html>

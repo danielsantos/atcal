@@ -23,7 +23,6 @@
             <tr th:each="payment : ${payments}">
                 <td th:text="${#temporals.format(payment.dueDate, 'dd/MM/yyyy')}"></td>
                 <td>R$ <span th:text="${payment.amount}" /></td>
-<!--                <td th:text="${payment.payDate} ?: '-'" />-->
                 <td th:text="${#temporals.format(payment.payDate, 'dd/MM/yyyy')} ?: '-'"></td>
                 <th:block th:switch="${payment.statusDescription}">
                     <td th:case="'EM ABERTO'" style="background-color: #b7b740; color: white; text-align: center" th:text="${payment.statusDescription}"></td>
@@ -37,7 +36,7 @@
                 </td>
             </tr>
         </table>
-        <p><a th:href="@{/payments/create/{id}(id=${client.id})}"><button class="btn btn-dark">Adicionar mensalidades</button></a></p>
+        <p><a th:href="@{/payments/create/{id}(id=${client.id})}"><button class="btn btn-primary">Adicionar mensalidades</button></a></p>
     </div>
 </body>
 </html>
