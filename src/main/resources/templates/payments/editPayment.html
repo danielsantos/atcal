@@ -8,21 +8,35 @@
     <div class="container">
         <h1 class="mb-3">Editar Mensalidade</h1>
         <form th:object="${payment}" th:action="@{/payments/edit/{id}(id=${payment.id})}" method="post">
-            <label>Vencimento: <input type="text" th:field="*{dueDate}" /></label>
-            <label>Data do Pagamento: <input type="text" th:field="*{payDate}" /></label>
-            <label>Valor: <input type="text" th:field="*{amount}" /></label>
+            <input type="text" th:field="*{dueDate}" id="dueDate" name="dueDate" required class="form-control" placeholder="Vencimento" style="width: 40%">
+
             <br/>
-            <label>Status:
-                <select th:field="*{status}">
+
+<!--            <label>Data do Pagamento: <input type="text" th:field="*{payDate}" /></label>-->
+            <input type="text" th:field="*{payDate}" id="payDate" name="payDate" class="form-control" placeholder="Data do Pagamento" style="width: 40%">
+
+            <br/>
+
+<!--            <label>Valor: <input type="text" th:field="*{amount}" /></label>-->
+            <input type="text" th:field="*{amount}" id="amount" name="amount" required class="form-control" placeholder="Valor" style="width: 40%">
+
+            <br/>
+
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Status:</label>
+                <select th:field="*{status}" class="form-select" id="exampleFormControlSelect1" style="width: 40%">
                     <option value="0">EM ABERTO</option>
                     <option value="1">PAGO</option>
                     <option value="2">VENCIDO</option>
                 </select>
-            </label>
+                </label>
+            </div>
+
             <br/>
-            <p><button type="submit" class="btn btn-dark">Salvar</button></p>
+
+            <p><button type="submit" class="btn btn-primary">Salvar</button></p>
         </form>
+        <p><a th:href="@{/payments/list/${payment.client.id}}">Voltar</a></p>
     </div>
-    <p><a th:href="@{/payments/list/${payment.client.id}}">Voltar para a lista de mensalidades</a></p>
 </body>
 </html>
