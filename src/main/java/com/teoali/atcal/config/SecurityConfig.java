@@ -15,17 +15,24 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecurityConfig {
 
+  // TODO PROD
+//  @Bean
+//  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//    return http.csrf().disable()
+//        .authorizeHttpRequests()
+//        .requestMatchers("/auth/welcome").permitAll()
+//        .requestMatchers("/register").permitAll()
+//        .and()
+//        .authorizeHttpRequests().requestMatchers("/**").authenticated()
+//        .and()
+//        .authorizeHttpRequests().requestMatchers("/**").authenticated()
+//        .and().formLogin().loginPage("/login").permitAll()
+//        .and().build();
+//  }
+
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    return http.csrf().disable()
-        .authorizeHttpRequests()
-        .requestMatchers("/auth/welcome").permitAll()
-        .requestMatchers("/register").permitAll()
-        .and()
-        .authorizeHttpRequests().requestMatchers("/**").authenticated()
-        .and()
-        .authorizeHttpRequests().requestMatchers("/**").authenticated()
-        .and().formLogin().loginPage("/login").permitAll()
+    return http.authorizeHttpRequests().anyRequest().permitAll()
         .and().build();
   }
 

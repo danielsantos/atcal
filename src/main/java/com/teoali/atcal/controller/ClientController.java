@@ -8,6 +8,7 @@ import com.teoali.atcal.domain.enums.Status;
 import com.teoali.atcal.repository.ClientRepository;
 import com.teoali.atcal.repository.GroupRepository;
 import com.teoali.atcal.repository.PaymentRepository;
+import com.teoali.atcal.service.UserService;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,22 +34,25 @@ public class ClientController {
   @Autowired
   private PaymentRepository paymentRepository;
 
+  @Autowired
+  private UserService userService;
+
   @GetMapping
   public String list(Model model, Authentication authentication) {
-    model.addAttribute("clients", clientRepository.findByUser(getUser(authentication)));
+    model.addAttribute("clients", clientRepository.findByUser(userService.getUser(authentication)));
     return "clients/list";
   }
 
   @GetMapping("/create")
   public String createForm(Model model, Authentication authentication) {
     model.addAttribute("client", new Client());
-    model.addAttribute("groups", groupRepository.findByUser(getUser(authentication)));
+    model.addAttribute("groups", groupRepository.findByUser(userService.getUser(authentication)));
     return "clients/create";
   }
 
   @PostMapping("/create")
   public String create(@ModelAttribute Client client, Authentication authentication) {
-    client.setUser(getUser(authentication));
+    client.setUser(userService.getUser(authentication));
     Client savedClient = clientRepository.save(client);
 
     for (int i = 0; i < client.getPaymentMultiplier(); i++) {
@@ -77,18 +81,18 @@ public class ClientController {
   @GetMapping("/edit/{id}")
   public String editForm(@PathVariable Long id, Model model, Authentication authentication) {
     Client client = clientRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid client Id: " + id));
-    if (!client.getUser().getId().equals(getUser(authentication).getId())) {
+    if (!client.getUser().getId().equals(userService.getUser(authentication).getId())) {
       return "home/notFound";
     }
 
     model.addAttribute("client", client);
-    model.addAttribute("groups", groupRepository.findByUser(getUser(authentication)));
+    model.addAttribute("groups", groupRepository.findByUser(userService.getUser(authentication)));
     return "clients/edit";
   }
 
   @PostMapping("/edit/{id}")
   public String edit(@PathVariable Long id, @ModelAttribute Client client, Authentication authentication) {
-    client.setUser(getUser(authentication));
+    client.setUser(userService.getUser(authentication));
     client.setId(id);
     clientRepository.save(client);
     return "redirect:/clients";
@@ -97,7 +101,7 @@ public class ClientController {
   @GetMapping("/delete/{id}")
   public String delete(@PathVariable Long id, Authentication authentication) {
     Client client = clientRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid client Id: " + id));
-    if (!client.getUser().getId().equals(getUser(authentication).getId())) {
+    if (!client.getUser().getId().equals(userService.getUser(authentication).getId())) {
       return "home/notFound";
     }
 
@@ -109,9 +113,5 @@ public class ClientController {
     
     clientRepository.deleteById(id);
     return "redirect:/clients";
-  }
-
-  private User getUser(Authentication authentication) {
-    return ((MyUserPrincipal) authentication.getPrincipal()).getUser();
   }
 }

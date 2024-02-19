@@ -3,6 +3,7 @@ package com.teoali.atcal.controller;
 import com.teoali.atcal.config.MyUserPrincipal;
 import com.teoali.atcal.domain.User;
 import com.teoali.atcal.repository.UserRepository;
+import com.teoali.atcal.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -21,9 +22,12 @@ public class UserController {
   @Autowired
   private UserRepository userRepository;
 
+  @Autowired
+  private UserService userService;
+
   @GetMapping
   public String list(Model model, Authentication authentication) {
-    if (getUser(authentication).getAdministrator() == null || getUser(authentication).getAdministrator() != 1) {
+    if (userService.getUser(authentication).getAdministrator() == null || userService.getUser(authentication).getAdministrator() != 1) {
       return "home/notFound";
     }
 
@@ -34,7 +38,7 @@ public class UserController {
 
   @GetMapping("/create")
   public String createForm(Model model, Authentication authentication) {
-    if (getUser(authentication).getAdministrator() == null || getUser(authentication).getAdministrator() != 1) {
+    if (userService.getUser(authentication).getAdministrator() == null || userService.getUser(authentication).getAdministrator() != 1) {
       return "home/notFound";
     }
 
@@ -44,7 +48,7 @@ public class UserController {
 
   @PostMapping("/create")
   public String criarUsuario(@ModelAttribute User user, Authentication authentication) {
-    if (getUser(authentication).getAdministrator() == null || getUser(authentication).getAdministrator() != 1) {
+    if (userService.getUser(authentication).getAdministrator() == null || userService.getUser(authentication).getAdministrator() != 1) {
       return "home/notFound";
     }
 
@@ -54,7 +58,7 @@ public class UserController {
 
   @GetMapping("/edit/{id}")
   public String editForm(@PathVariable Long id, Model model, Authentication authentication) {
-    if (getUser(authentication).getAdministrator() == null || getUser(authentication).getAdministrator() != 1) {
+    if (userService.getUser(authentication).getAdministrator() == null || userService.getUser(authentication).getAdministrator() != 1) {
       return "home/notFound";
     }
 
@@ -65,7 +69,7 @@ public class UserController {
 
   @PostMapping("/edit/{id}")
   public String edit(@PathVariable Long id, @ModelAttribute User user, Authentication authentication) {
-    if (getUser(authentication).getAdministrator() == null || getUser(authentication).getAdministrator() != 1) {
+    if (userService.getUser(authentication).getAdministrator() == null || userService.getUser(authentication).getAdministrator() != 1) {
       return "home/notFound";
     }
 
@@ -76,15 +80,11 @@ public class UserController {
 
   @GetMapping("/delete/{id}")
   public String delete(@PathVariable Long id, Authentication authentication) {
-    if (getUser(authentication).getAdministrator() == null || getUser(authentication).getAdministrator() != 1) {
+    if (userService.getUser(authentication).getAdministrator() == null || userService.getUser(authentication).getAdministrator() != 1) {
       return "home/notFound";
     }
 
     userRepository.deleteById(id);
     return "redirect:/users";
-  }
-
-  private User getUser(Authentication authentication) {
-    return ((MyUserPrincipal) authentication.getPrincipal()).getUser();
   }
 }

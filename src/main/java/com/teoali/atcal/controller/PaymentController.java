@@ -7,6 +7,7 @@ import com.teoali.atcal.domain.User;
 import com.teoali.atcal.domain.enums.Status;
 import com.teoali.atcal.repository.ClientRepository;
 import com.teoali.atcal.repository.PaymentRepository;
+import com.teoali.atcal.service.UserService;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,13 @@ public class PaymentController {
   @Autowired
   private PaymentRepository paymentRepository;
 
+  @Autowired
+  private UserService userService;
+
   @GetMapping("/create/{id}")
   public String createForm(@PathVariable Long id, Model model, Authentication authentication) {
     Client client = clientRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid client Id: " + id));
-    if (!client.getUser().getId().equals(getUser(authentication).getId())) {
+    if (!client.getUser().getId().equals(userService.getUser(authentication).getId())) {
       return "home/notFound";
     }
 
@@ -69,7 +73,7 @@ public class PaymentController {
   @GetMapping("/list/{id}")
   public String list(@PathVariable Long id, Model model, Authentication authentication) {
     Client client = clientRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid client Id: " + id));
-    if (!client.getUser().getId().equals(getUser(authentication).getId())) {
+    if (!client.getUser().getId().equals(userService.getUser(authentication).getId())) {
       return "home/notFound";
     }
 
@@ -82,7 +86,7 @@ public class PaymentController {
   @GetMapping("/edit/{id}")
   public String editForm(@PathVariable Long id, Model model, Authentication authentication) {
     Payment payment = paymentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid payment Id:" + id));
-    if (!payment.getClient().getUser().getId().equals(getUser(authentication).getId())) {
+    if (!payment.getClient().getUser().getId().equals(userService.getUser(authentication).getId())) {
       return "home/notFound";
     }
 
@@ -105,7 +109,7 @@ public class PaymentController {
   @GetMapping("/paid_out/{id}")
   public String paidOut(@PathVariable Long id, Authentication authentication) {
     Payment payment = paymentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid payment Id:" + id));
-    if (!payment.getClient().getUser().getId().equals(getUser(authentication).getId())) {
+    if (!payment.getClient().getUser().getId().equals(userService.getUser(authentication).getId())) {
       return "home/notFound";
     }
 
@@ -118,7 +122,7 @@ public class PaymentController {
   @GetMapping("/delete/{id}")
   public String delete(@PathVariable Long id, Authentication authentication) {
     Payment payment = paymentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid payment Id:" + id));
-    if (!payment.getClient().getUser().getId().equals(getUser(authentication).getId())) {
+    if (!payment.getClient().getUser().getId().equals(userService.getUser(authentication).getId())) {
       return "home/notFound";
     }
 
@@ -128,22 +132,22 @@ public class PaymentController {
 
   @GetMapping("/list/clients/debt")
   public String listClientsWithDebt(Model model, Authentication authentication) {
-    model.addAttribute("payments", paymentRepository.getDebtPayments(getUser(authentication).getId()));
+    model.addAttribute("payments", paymentRepository.getDebtPayments(userService.getUser(authentication).getId()));
     return "payments/listClientsWithDebt";
   }
 
   @GetMapping("/list/receive/actual/month")
   public String listPaymentsToReceiveActualMonth(Model model, Authentication authentication) {
-    model.addAttribute("payments", paymentRepository.getPaymentsToReceive(getUser(authentication).getId(), firstDayOfMonth(), lastDayOfMonth()));
-    model.addAttribute("totalAmount", paymentRepository.getSumAmountToReceive(getUser(authentication).getId(), firstDayOfMonth(), lastDayOfMonth()));
+    model.addAttribute("payments", paymentRepository.getPaymentsToReceive(userService.getUser(authentication).getId(), firstDayOfMonth(), lastDayOfMonth()));
+    model.addAttribute("totalAmount", paymentRepository.getSumAmountToReceive(userService.getUser(authentication).getId(), firstDayOfMonth(), lastDayOfMonth()));
     model.addAttribute("firstDayMonth", firstDayOfMonth());
     return "payments/listPaymentsToReceive";
   }
 
   @GetMapping("/list/receive/next/month")
   public String listPaymentsToReceiveNextMonth(Model model, Authentication authentication) {
-    model.addAttribute("payments", paymentRepository.getPaymentsToReceive(getUser(authentication).getId(), firstDayOfNextMonth(), lastDayOfNextMonth()));
-    model.addAttribute("totalAmount", paymentRepository.getSumAmountToReceive(getUser(authentication).getId(), firstDayOfNextMonth(), lastDayOfNextMonth()));
+    model.addAttribute("payments", paymentRepository.getPaymentsToReceive(userService.getUser(authentication).getId(), firstDayOfNextMonth(), lastDayOfNextMonth()));
+    model.addAttribute("totalAmount", paymentRepository.getSumAmountToReceive(userService.getUser(authentication).getId(), firstDayOfNextMonth(), lastDayOfNextMonth()));
     model.addAttribute("firstDayMonth", firstDayOfNextMonth());
     return "payments/listPaymentsToReceive";
   }
@@ -159,10 +163,6 @@ public class PaymentController {
   }
 
   // TODO UNIFY THIS METHOD ON ALL CONTROLLERS
-  private User getUser(Authentication authentication) {
-    return ((MyUserPrincipal) authentication.getPrincipal()).getUser();
-  }
-
   private LocalDate firstDayOfMonth() {
     return LocalDate.now().withDayOfMonth(1);
   }

@@ -4,6 +4,7 @@ import com.teoali.atcal.config.MyUserPrincipal;
 import com.teoali.atcal.domain.Group;
 import com.teoali.atcal.domain.User;
 import com.teoali.atcal.repository.GroupRepository;
+import com.teoali.atcal.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -22,9 +23,12 @@ public class GroupController {
   @Autowired
   private GroupRepository groupRepository;
 
+  @Autowired
+  private UserService userService;
+
   @GetMapping
   public String list(Model model, Authentication authentication) {
-    List<Group> groups = groupRepository.findByUser(getUser(authentication));
+    List<Group> groups = groupRepository.findByUser(userService.getUser(authentication));
     model.addAttribute("groups", groups);
     return "groups/list";
   }
@@ -37,7 +41,7 @@ public class GroupController {
 
   @PostMapping("/create")
   public String create(@ModelAttribute Group group, Authentication authentication) {
-    group.setUser(getUser(authentication));
+    group.setUser(userService.getUser(authentication));
     groupRepository.save(group);
     return "redirect:/groups";
   }
@@ -45,7 +49,7 @@ public class GroupController {
   @GetMapping("/edit/{id}")
   public String editForm(@PathVariable Long id, Model model, Authentication authentication) {
     Group group = groupRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid group Id: " + id));
-    if (!group.getUser().getId().equals(getUser(authentication).getId())) {
+    if (!group.getUser().getId().equals(userService.getUser(authentication).getId())) {
       return "home/notFound";
     }
 
@@ -56,7 +60,7 @@ public class GroupController {
   @PostMapping("/edit/{id}")
   public String edit(@PathVariable Long id, @ModelAttribute Group group, Authentication authentication) {
     group.setId(id);
-    group.setUser(getUser(authentication));
+    group.setUser(userService.getUser(authentication));
     groupRepository.save(group);
     return "redirect:/groups";
   }
@@ -64,15 +68,11 @@ public class GroupController {
   @GetMapping("/delete/{id}")
   public String delete(@PathVariable Long id, Authentication authentication) {
     Group group = groupRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid group Id: " + id));
-    if (!group.getUser().getId().equals(getUser(authentication).getId())) {
+    if (!group.getUser().getId().equals(userService.getUser(authentication).getId())) {
       return "home/notFound";
     }
 
     groupRepository.deleteById(id);
     return "redirect:/groups";
-  }
-
-  private User getUser(Authentication authentication) {
-    return ((MyUserPrincipal) authentication.getPrincipal()).getUser();
   }
 }
