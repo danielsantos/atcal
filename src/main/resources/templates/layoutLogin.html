@@ -41,46 +41,10 @@
 </head>
 
 <div th:fragment="navbar">
-    <nav
-            class="navbar navbar-expand-lg mb-3 d-flex justify-content-between">
-        <a class="logo" href="/"><img
-                src="https://import.cdn.thinkific.com/220759%2Fcustom_site_themes%2Fid%2FhbIbe45tSJSfztUcZ1Qm_LOGOTIPO-CODER-FUNDOTRANSPARENTE-PRETA.png?width=384&dpr=1"
-                alt="" width="300" height="60" class="d-inline-row align-text-top"></a>
+    <nav class="navbar navbar-expand-lg mb-3 d-flex justify-content-between">
+        <a class="logo" href="/">TEOALI</a>
 
         <ul class="nav">
         </ul>
     </nav>
-</div>
-
-<div th:fragment="form">
-
-    <div class="form-group">
-        <label for="nome" class="form-label">Nome</label>
-        <input class="form-control" type="text" th:field="*{nome}"  id="nome" placeholder="Nome Completo" >
-    </div>
-
-    <div class="form-group">
-        <label for="inputEmail" class="form-label">Email</label> <input
-            th:field="*{email}" type="email" class="form-control" id="inputEmail" required>
-
-    </div>
-
-    <div class="form-group">
-        <label for="inputCargo" class="form-label">Cargo</label> <input
-            th:field="*{cargo}" type="text" class="form-control" id="inputCargo" required>
-    </div>
-    <div class="form-group">
-        <label for="inputSalario" class="form-label">Salario</label> <input
-            th:field="*{salario}" type="number" step="any" class="form-control"
-            id="inputSalario" placeholder="R$1000.00" required>
-    </div>
-
-    <div class="col-4">
-        <label for="inputState" class="form-label">Setor</label> <select
-            th:field="*{setor}" id="inputState" class="form-select">
-        <option value="TECNOLOGIA">Tecnologia</option>
-        <option value="RH">RH</option>
-        <option value="DIRETORIA">Diretoria</option>
-    </select>
-    </div>
 </div>

@@ -181,7 +181,8 @@ public class PaymentController {
   }
 
   private LocalDate lastDayOfNextMonth() {
-      return LocalDate.now().plusMonths(1).withDayOfMonth(LocalDate.now().lengthOfMonth());
+    LocalDate nextMonth = LocalDate.now().plusMonths(1);
+    return nextMonth.withDayOfMonth(nextMonth.lengthOfMonth());
   }
   // TODO UNIFY THIS METHOD ON ALL CONTROLLERS
 

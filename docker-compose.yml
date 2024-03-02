@@ -1,0 +1,12 @@
+version: '3.3'
+services:
+  mysql:
+    image: 'mysql:8.0'
+    container_name: mysql_test
+    environment:
+      - MYSQL_ROOT_PASSWORD=toor
+      - MYSQL_DATABASE=atcaldb
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+    ports:
+      - '3306:3306'

@@ -16,25 +16,26 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
   // TODO PROD
-//  @Bean
-//  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//    return http.csrf().disable()
-//        .authorizeHttpRequests()
-//        .requestMatchers("/auth/welcome").permitAll()
-//        .requestMatchers("/register").permitAll()
-//        .and()
-//        .authorizeHttpRequests().requestMatchers("/**").authenticated()
-//        .and()
-//        .authorizeHttpRequests().requestMatchers("/**").authenticated()
-//        .and().formLogin().loginPage("/login").permitAll()
-//        .and().build();
-//  }
-
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    return http.authorizeHttpRequests().anyRequest().permitAll()
+    return http.csrf().disable()
+        .authorizeHttpRequests()
+        .requestMatchers("/auth/welcome").permitAll()
+        .requestMatchers("/register").permitAll()
+        .requestMatchers("/").permitAll()
+        .and()
+        .authorizeHttpRequests().requestMatchers("/**").authenticated()
+        .and()
+        .authorizeHttpRequests().requestMatchers("/**").authenticated()
+        .and().formLogin().loginPage("/login").permitAll()
         .and().build();
   }
+
+//  @Bean
+//  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//    return http.authorizeHttpRequests().anyRequest().permitAll()
+//        .and().build();
+//  }
 
   @Bean
   public PasswordEncoder passwordEncoder() {

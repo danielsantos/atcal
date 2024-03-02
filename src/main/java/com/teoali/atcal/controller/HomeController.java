@@ -38,7 +38,12 @@ public class HomeController {
   private UserService userService;
 
   @GetMapping
-  public String home(Model model, Authentication authentication) {
+  public String home() {
+    return "home/home";
+  }
+
+  @GetMapping("/index")
+  public String index(Model model, Authentication authentication) {
     User user = userRepository.findById(userService.getUser(authentication).getId()).orElseThrow(() -> new IllegalArgumentException("Invalid user"));
 
     Home home = new Home();
@@ -93,7 +98,8 @@ public class HomeController {
   }
 
   private LocalDate lastDayOfNextMonth() {
-    return LocalDate.now().plusMonths(1).withDayOfMonth(LocalDate.now().lengthOfMonth());
+    LocalDate nextMonth = LocalDate.now().plusMonths(1);
+    return nextMonth.withDayOfMonth(nextMonth.lengthOfMonth());
   }
   // TODO UNIFY THIS METHOD ON ALL CONTROLLERS
 
