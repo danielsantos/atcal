@@ -1,6 +1,7 @@
 package com.teoali.atcal.config;
 
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -20,11 +21,9 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     return http.csrf().disable()
         .authorizeHttpRequests()
-        .requestMatchers("/auth/welcome").permitAll()
         .requestMatchers("/register").permitAll()
         .requestMatchers("/").permitAll()
-        .and()
-        .authorizeHttpRequests().requestMatchers("/**").authenticated()
+        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
         .and()
         .authorizeHttpRequests().requestMatchers("/**").authenticated()
         .and().formLogin().loginPage("/login").permitAll()
