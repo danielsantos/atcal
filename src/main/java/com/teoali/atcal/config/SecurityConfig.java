@@ -26,7 +26,10 @@ public class SecurityConfig {
         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
         .and()
         .authorizeHttpRequests().requestMatchers("/**").authenticated()
-        .and().formLogin().loginPage("/login").permitAll()
+        .and()
+        .formLogin()
+          .loginPage("/login")
+          .defaultSuccessUrl("/index", true).permitAll()
         .and().build();
   }
 
