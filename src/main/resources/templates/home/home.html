@@ -1,10 +1,132 @@
-<head th:replace="~{layoutBase :: head}">
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Gerenciador de Mensalidades</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #87efea;
+            color: rgb(34, 27, 27);
+            padding: 10px;
+            text-align: center;
+        }
+        nav {
+            background-color: #bdf5f2;
+            padding: 10px;
+        }
+        nav a {
+            color: rgb(34, 27, 27);
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: 500;
+        }
+        .carousel {
+            width: 100%;
+            height: 565px;
+            background-color: white;
+            overflow: hidden;
+            position: relative;
+        }
+        .carousel img {
+            width: 80%;
+            height: auto;
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .pricing {
+            background-color: #f9f9f9;
+            padding: 50px 0;
+            text-align: center;
+        }
+        .features {
+            padding: 50px 0;
+            text-align: center;
+        }
+        .feature {
+            display: inline-block;
+            margin: 0 20px;
+        }
+        .login {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .login a {
+            color: #333;
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+    </style>
 </head>
-
 <body>
-<div th:replace="~{layoutHome :: navbar}"></div>
-    <div style="height: 80%; width: 100%; display: flex; justify-content: center; align-items: center; text-align: center;">
-        <h1>Sistema Gerenciador de Mensalidades</h1>
-    </div>
+<header>
+    <h1>teoali - Sistema Gerenciador de Mensalidades</h1>
+</header>
+<nav style="text-align: right;">
+    <!-- <a href="#carousel">Carrossel</a> -->
+    <a href="#pricing">O sistema</a>
+    <a href="#features">Assinatura</a>
+    <a href="/login">Login</a>
+</nav>
+<div class="carousel" id="carousel" style="margin-top: 5px; margin-left: 10%;">
+    <img th:src="@{/images/imagem1.jpg}" alt="Imagem 1" class="active" style="margin-top: 1%; margin-left: 8%; width: 60%;">
+    <img th:src="@{/images/imagem2.jpg}" alt="Imagem 2" style="width: 72%; margin-left: 4%;">
+    <img th:src="@{/images/imagem3.jpg}" alt="Imagem 3" style="margin-top: 5%;">
 </div>
+<div class="pricing" id="pricing">
+    <h2>Foque no que importa!</h2>
+    <h3>Sistema simplificado de gerenciamento de mensalidades.</h3>
+    <p>Ferramenta indispensável para instituições que buscam simplificar e otimizar o processo de controle financeiro, o sistema teoali, <br/>
+        possui funcionalidades intuitivas e eficientes para controlar o recebimento de mensalidades.</p>
+    <!-- <p>Nosso sistema oferece uma série de benefícios que revolucionam a gestão de pagamentos</p> -->
+</div>
+<div class="features" id="features">
+    <h2>Assinatura</h2>
+    <div class="feature">
+        <h3>Cadastra-se e teste grátis por 7 dias.</h3>
+        <p>Após o período, por um investimento de R$ 30 mensais, sua instituição continuará com acesso total ao sistema.</p>
+        <p>Clique <a href="/login">aqui</a> e começe a usar!</p>
+    </div>
+    <!-- <div class="feature">
+        <h3>Funcionalidade 2</h3>
+        <p>Descrição da funcionalidade 2.</p>
+    </div>
+    <div class="feature">
+        <h3>Funcionalidade 3</h3>
+        <p>Descrição da funcionalidade 3.</p>
+    </div> -->
+</div>
+<!-- <div class="login">
+    <a href="login.html">Login</a>
+</div> -->
+
+<script>
+    // Carrossel de imagens
+    let slideIndex = 0;
+    carousel();
+
+    function carousel() {
+        let i;
+        const slides = document.querySelectorAll('.carousel img');
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) {
+            slideIndex = 1;
+        }
+        slides[slideIndex - 1].style.display = "block";
+        setTimeout(carousel, 3000);
+    }
+</script>
 </body>
+</html>
