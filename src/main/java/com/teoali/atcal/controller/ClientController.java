@@ -48,6 +48,7 @@ public class ClientController {
     User user = ((MyUserPrincipal) authentication.getPrincipal()).getUser();
     logger.info("audit - usuario: " + user.getUsername() + " - ip: " + request.getRemoteAddr());
     model.addAttribute("clients", clientRepository.findByUser(userService.getUser(authentication)));
+    model.addAttribute("groups", groupRepository.findByUser(userService.getUser(authentication)));
     return "clients/list";
   }
 
