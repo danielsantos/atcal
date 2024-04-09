@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Example of Employee Table with twitter bootstrap</title>
+    <title>TEOALI</title>
     <meta name="description" content="Creating a Employee table with Twitter Bootstrap. Learn with example of a Employee Table with Twitter Bootstrap.">
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -13,7 +13,7 @@
     <style>
         .table-title {
             padding-bottom: 15px;
-            background: #435d7d;
+            background: #6897bb;
             color: #fff;
             padding: 16px 30px;
             min-width: 100%;
@@ -49,8 +49,24 @@
         }
     </style>
 </head>
-<body style="margin:20px auto">
-<div class="container">
+<!--<body style="margin:20px auto">-->
+<body>
+
+<nav class="navbar navbar-default" style="font-weight: 500">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">TEOALI</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Home</a></li>
+            <li class="active"><a href="#">Clientes</a></li>
+            <li><a href="/groups">Grupos</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container" style="margin-top: 4%;">
     <div class="row header" style="text-align:center;color:green">
         <div class="table-title">
             <div class="row">
@@ -68,17 +84,20 @@
             <tr>
                 <th>ID</th>
                 <th>NOME</th>
-                <!-- <th>Ações</th> -->
+                <th>GRUPO</th>
+                <th>AÇÕES</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="client : ${clients}">
                 <td th:text="${client.id}"></td>
                 <td th:text="${client.name}"></td>
-                <!-- <td>
-                    <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                    <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                </td> -->
+                <td th:text="${client.group?.name}"></td>
+                <td>
+                    <a th:href="@{/clients/edit/{id}(id=${client.id})}" th:method="get"><i class="material-icons" data-toggle="tooltip" title="Editar Cliente">&#xE254;</i></a>
+<!--                    <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>-->
+<!--                    <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>-->
+                </td>
             </tr>
         </tbody>
     </table>

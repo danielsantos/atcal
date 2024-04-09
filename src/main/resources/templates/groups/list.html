@@ -1,27 +1,134 @@
-<head th:replace="~{layoutBase :: head}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>TEOALI</title>
+    <meta name="description" content="Creating a Employee table with Twitter Bootstrap. Learn with example of a Employee Table with Twitter Bootstrap.">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        .table-title {
+            padding-bottom: 15px;
+            background: #6897bb;
+            color: #fff;
+            padding: 16px 30px;
+            min-width: 100%;
+            margin: -20px -25px 10px;
+            border-radius: 3px 3px 0 0;
+        }
+        .table-title h2 {
+            margin: 5px 0 0;
+            font-size: 24px;
+        }
+        .table-title .btn-group {
+            float: right;
+        }
+        .table-title .btn {
+            color: #fff;
+            float: right;
+            font-size: 13px;
+            border: none;
+            min-width: 50px;
+            border-radius: 2px;
+            border: none;
+            outline: none !important;
+            margin-left: 10px;
+        }
+        .table-title .btn i {
+            float: left;
+            font-size: 21px;
+            margin-right: 5px;
+        }
+        .table-title .btn span {
+            float: left;
+            margin-top: 2px;
+        }
+    </style>
 </head>
-
+<!--<body style="margin:20px auto">-->
 <body>
-    <div th:replace="~{layoutBase :: navbar}"></div>
-    <div class="container mb-2">
-    <h1>Grupos</h1>
-    <table class="table table-light">
-        <tr class="table-dark">
+
+<nav class="navbar navbar-default" style="font-weight: 500">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">TEOALI</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Home</a></li>
+            <li><a href="/clients">Clientes</a></li>
+            <li class="active"><a href="#">Grupos</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container" style="margin-top: 4%;">
+    <div class="row header" style="text-align:center;color:green">
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-6" style="text-align: left;">
+                    <h2>Gerenciando <b>Grupos</b></h2>
+                </div>
+                <div class="col-sm-6">
+                    <a href="#addGroupModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Adicionar Novo Grupo</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table id="myTable" class="table table-striped" >
+        <thead>
+        <tr>
             <th>ID</th>
-            <th>Nome</th>
-            <th>Ações</th>
+            <th>NOME</th>
+            <th>AÇÕES</th>
         </tr>
+        </thead>
+        <tbody>
         <tr th:each="group : ${groups}">
             <td th:text="${group.id}"></td>
             <td th:text="${group.name}"></td>
-            <td class="buttons ">
-                <a th:href="@{/groups/edit/{id}(id=${group.id})}" th:method="get" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                <!-- <a th:href="@{/groups/delete/{id}(id=${group.id})}" th:method="delete" class="btn btn-danger"><i class="fa fa-trash"></i></a> -->
-                <!-- TODO V2: Implentar validacao de usuario no grupo antes de exclusao -->
+            <td>
+                <a th:href="@{/groups/edit/{id}(id=${group.id})}" th:method="get"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
             </td>
         </tr>
+        </tbody>
     </table>
-    <p><a th:href="@{/groups/create}"><button class="btn btn-primary">Adicionar grupo</button></a></p>
 </div>
+
+<div id="addGroupModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form th:object="${group}" th:action="@{/groups/create}" method="post">
+                <div class="modal-header">
+                    <h4 class="modal-title">Adicionando Cliente</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" name="name" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+                    <input type="submit" class="btn btn-success" value="Adicionar">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 </body>
+<script>
+    $(document).ready(function(){
+        $('#myTable').dataTable({language: {
+                url: 'https://cdn.datatables.net/plug-ins/2.0.2/i18n/pt-BR.json',
+            }}
+        );
+    });
+</script>
 </html>
