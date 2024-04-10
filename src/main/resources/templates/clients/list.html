@@ -94,7 +94,9 @@
                 <td th:text="${client.name}"></td>
                 <td th:text="${client.group?.name}"></td>
                 <td>
-                    <a th:href="@{/clients/edit/{id}(id=${client.id})}" th:method="get"><i class="material-icons" data-toggle="tooltip" title="Editar Cliente">&#xE254;</i></a>
+                    <a th:href="@{/clients/edit/{id}(id=${client.id})}"  th:method="get"><i class="material-icons" data-toggle="tooltip" title="Editar Cliente">&#xE254;</i></a>
+                    <a th:href="@{/payments/list/{id}(id=${client.id})}" th:method="get"><i class="material-icons" data-toggle="tooltip" title="Mensalidades do Cliente">&#xE227;</i></a>
+                    <a th:href="@{/payments/list/old/{id}(id=${client.id})}" th:method="get"><i class="material-icons" data-toggle="tooltip" title="Mensalidades do Cliente">&#xE227;</i></a>
 <!--                    <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>-->
 <!--                    <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>-->
                 </td>

@@ -1,9 +1,7 @@
 package com.teoali.atcal.controller;
 
-import com.teoali.atcal.config.MyUserPrincipal;
 import com.teoali.atcal.domain.Client;
 import com.teoali.atcal.domain.Payment;
-import com.teoali.atcal.domain.User;
 import com.teoali.atcal.domain.enums.Status;
 import com.teoali.atcal.repository.ClientRepository;
 import com.teoali.atcal.repository.PaymentRepository;
@@ -46,6 +44,18 @@ public class PaymentController {
     return "payments/createPayments";
   }
 
+  @GetMapping("/create/old/{id}")
+  public String createFormOLD(@PathVariable Long id, Model model, Authentication authentication) {
+    Client client = clientRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid client Id: " + id));
+    if (!client.getUser().getId().equals(userService.getUser(authentication).getId())) {
+      return "home/notFound";
+    }
+
+    model.addAttribute("client", client);
+    model.addAttribute("payment", new Payment());
+    return "payments/createPayments_OLD";
+  }
+
   @PostMapping("/create/{id}")
   public String create(@PathVariable Long id, @ModelAttribute Client client) { // TODO RECEBER O ID DO CLIENTE
     for (int i = 0; i < client.getPaymentMultiplier(); i++) {
@@ -83,6 +93,19 @@ public class PaymentController {
     model.addAttribute("payments", paymentRepository.findByClient(client));
 
     return "payments/listPayments";
+  }
+
+  @GetMapping("/list/old/{id}")
+  public String listOld(@PathVariable Long id, Model model, Authentication authentication) {
+    Client client = clientRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid client Id: " + id));
+    if (!client.getUser().getId().equals(userService.getUser(authentication).getId())) {
+      return "home/notFound";
+    }
+
+    model.addAttribute("client", client);
+    model.addAttribute("payments", paymentRepository.findByClient(client));
+
+    return "payments/listPayments_OLD";
   }
 
   @GetMapping("/edit/{id}")

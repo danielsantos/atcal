@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head th:replace="~{layoutBase :: head}">
+</head>
+
+<body>
+    <div th:replace="~{layoutBase :: navbar}"></div>
+    <div class="container">
+        <h1 class="mb-3">Adicionar Mensalidades</h1>
+
+        <h4>Nome: <span th:text="${client.name}" /></h4>
+        <br/>
+        <h4>Grupo: <span th:text="${client.group?.name}" /></h4>
+        <br/>
+
+        <form th:object="${client}" th:action="@{/payments/create/{id}(id=${client.id})}" method="post">
+
+            <div class="input-group mb-3" style="width: 40%">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">R$</span>
+                </div>
+                <input type="text" id="amount" name="amount" required class="form-control" placeholder="Valor da Mensalidade">
+            </div>
+
+            <br/>
+
+            <input type="text" id="dueDay" name="dueDay" required class="form-control" placeholder="Dia do Vencimento" style="width: 40%">
+
+            <br/>
+
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Quantas Mensalidades a Cadastrar:</label>
+                <select th:field="*{paymentMultiplier}" class="form-select" id="exampleFormControlSelect1" style="width: 5%">
+                    <option value="12">12</option>
+                    <option value="11">11</option>
+                    <option value="10">10</option>
+                    <option value="9">9</option>
+                    <option value="8">8</option>
+                    <option value="7">7</option>
+                    <option value="6">6</option>
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                </select>
+            </div>
+
+            <br/>
+
+            <p><button type="submit" class="btn btn-primary">Salvar</button></p>
+        </form>
+        <p><a th:href="@{/payments/list/{id}(id=${client.id})}">Voltar</a></p>
+    </div>
+
+</body>
+</html>

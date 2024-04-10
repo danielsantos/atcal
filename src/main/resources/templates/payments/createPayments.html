@@ -1,58 +1,117 @@
 <!DOCTYPE html>
-<html>
-
-<head th:replace="~{layoutBase :: head}">
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>TEOALI</title>
+    <meta name="description" content="Creating a Employee table with Twitter Bootstrap. Learn with example of a Employee Table with Twitter Bootstrap.">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        .table-title {
+            padding-bottom: 15px;
+            background: #6897bb;
+            color: #fff;
+            padding: 16px 30px;
+            min-width: 100%;
+            margin: -20px -25px 10px;
+            border-radius: 3px 3px 0 0;
+        }
+        .table-title h2 {
+            margin: 5px 0 0;
+            font-size: 24px;
+        }
+        .table-title .btn-group {
+            float: right;
+        }
+        .table-title .btn {
+            color: #fff;
+            float: right;
+            font-size: 13px;
+            border: none;
+            min-width: 50px;
+            border-radius: 2px;
+            border: none;
+            outline: none !important;
+            margin-left: 10px;
+        }
+        .table-title .btn i {
+            float: left;
+            font-size: 21px;
+            margin-right: 5px;
+        }
+        .table-title .btn span {
+            float: left;
+            margin-top: 2px;
+        }
+    </style>
 </head>
-
+<!--<body style="margin:20px auto">-->
 <body>
-    <div th:replace="~{layoutBase :: navbar}"></div>
-    <div class="container">
-        <h1 class="mb-3">Adicionar Mensalidades</h1>
 
-        <h4>Nome: <span th:text="${client.name}" /></h4>
-        <br/>
-        <h4>Grupo: <span th:text="${client.group?.name}" /></h4>
-        <br/>
-
-        <form th:object="${client}" th:action="@{/payments/create/{id}(id=${client.id})}" method="post">
-
-            <div class="input-group mb-3" style="width: 40%">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1">R$</span>
-                </div>
-                <input type="text" id="amount" name="amount" required class="form-control" placeholder="Valor da Mensalidade">
-            </div>
-
-            <br/>
-
-            <input type="text" id="dueDay" name="dueDay" required class="form-control" placeholder="Dia do Vencimento" style="width: 40%">
-
-            <br/>
-
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Quantas Mensalidades a Cadastrar:</label>
-                <select th:field="*{paymentMultiplier}" class="form-select" id="exampleFormControlSelect1" style="width: 5%">
-                    <option value="12">12</option>
-                    <option value="11">11</option>
-                    <option value="10">10</option>
-                    <option value="9">9</option>
-                    <option value="8">8</option>
-                    <option value="7">7</option>
-                    <option value="6">6</option>
-                    <option value="5">5</option>
-                    <option value="4">4</option>
-                    <option value="3">3</option>
-                    <option value="2">2</option>
-                    <option value="1">1</option>
-                </select>
-            </div>
-
-            <br/>
-
-            <p><button type="submit" class="btn btn-primary">Salvar</button></p>
-        </form>
-        <p><a th:href="@{/payments/list/{id}(id=${client.id})}">Voltar</a></p>
+<nav class="navbar navbar-default" style="font-weight: 500">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">TEOALI</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Home</a></li>
+            <li class="active"><a href="#">Clientes</a></li>
+            <li><a href="/groups">Grupos</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
     </div>
+</nav>
 
+<div class="container" style="margin-top: 4%;">
+    <div class="row header" style="text-align:center;color:green">
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-6" style="text-align: left;">
+                    <h2>Adicionar <b>Mensalidade</b></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form th:object="${client}" th:action="@{/payments/create/{id}(id=${client.id})}" method="post">
+        <div class="form-group">
+            <label for="amount">Valor da Mensalidade:</label>
+            <input type="text" id="amount" name="name" th:field="*{amount}" required class="form-control" style="width: 40%">
+        </div>
+
+        <br/>
+
+        <div class="form-group">
+            <label for="dueDay">Dia do Vencimento:</label>
+            <input type="text" id="dueDay" name="dueDay" th:field="*{dueDay}" required class="form-control" style="width: 40%">
+        </div>
+
+        <br/>
+
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Quantas Mensalidades a Cadastrar:</label>
+            <select th:field="*{paymentMultiplier}" class="form-select" id="exampleFormControlSelect1" style="width: 5%">
+                <option value="12">12</option>
+                <option value="11">11</option>
+                <option value="10">10</option>
+                <option value="9">9</option>
+                <option value="8">8</option>
+                <option value="7">7</option>
+                <option value="6">6</option>
+                <option value="5">5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+                <option value="1">1</option>
+            </select>
+        </div>
+
+        <p><button type="submit" class="btn btn-primary">Salvar</button></p>
+    </form>
+</div>
 </body>
+
 </html>

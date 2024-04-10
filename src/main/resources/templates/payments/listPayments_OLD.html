@@ -1,0 +1,42 @@
+<head th:replace="~{layoutBase :: head}"></head>
+
+<body>
+    <div th:replace="~{layoutBase :: navbar}"></div>
+    <div class="container mb-2">
+        <h1>Mensalidades de Cliente</h1>
+
+        <br/>
+
+        <h4>Nome: <span th:text="${client.name}" /></h4>
+        <br/>
+        <h4>Grupo: <span th:text="${client.group?.name}" /></h4>
+        <br/>
+
+        <table class="table table-light">
+            <tr class="table-dark">
+                <th>Vencimento</th>
+                <th>Valor</th>
+                <th>Data do Pagamento</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+            <tr th:each="payment : ${payments}">
+                <td th:text="${#temporals.format(payment.dueDate, 'dd/MM/yyyy')}"></td>
+                <td>R$ <span th:text="${payment.amount}" /></td>
+                <td th:text="${#temporals.format(payment.payDate, 'dd/MM/yyyy')} ?: '-'"></td>
+                <th:block th:switch="${payment.statusDescription}">
+                    <td th:case="'EM ABERTO'" style="background-color: #b7b740; color: white; text-align: center" th:text="${payment.statusDescription}"></td>
+                    <td th:case="'PAGO'" style="background-color: #559355; color: white; text-align: center" th:text="${payment.statusDescription}"></td>
+                    <td th:case="'VENCIDO'" style="background-color: #af6b6b; color: white; text-align: center" th:text="${payment.statusDescription}"></td>
+                </th:block>
+                <td class="buttons ">
+                    <a th:if="${payment.statusDescription == 'EM ABERTO'}" th:href="@{/payments/paid_out/{id}(id=${payment.id})}" th:method="get" class="btn btn-success"><i class="fa fa-money"></i></a>
+                    <a th:href="@{/payments/edit/{id}(id=${payment.id})}" th:method="get" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                    <a th:href="@{/payments/delete/{id}(id=${payment.id})}" th:method="delete" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        </table>
+        <p><a th:href="@{/payments/create/old/{id}(id=${client.id})}"><button class="btn btn-primary">Adicionar mensalidades</button></a></p>
+    </div>
+</body>
+</html>
