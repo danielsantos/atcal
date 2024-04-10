@@ -1,0 +1,30 @@
+<head th:replace="~{layoutBase :: head}">
+</head>
+
+<body>
+    <div th:replace="~{layoutLogin :: navbar}"></div>
+    <div class="container mb-2">
+        <div class="home" style="text-align: center;">
+            <span th:if="${successRegister}" style="color: floralwhite">
+                <h1 class="mb-3">Cadastro realizado com sucesso!</h1>
+            </span>
+
+            <br/>
+
+            <h1 class="mb-3">Entrar</h1>
+            <form th:action="@{/login}" method="post">
+                <div style="text-align: -webkit-center">
+                    <input type="text" id="username" name="username" required class="form-control" placeholder="Login" style="width: 40%">
+                </div>
+                <br/>
+                <div style="text-align: -webkit-center">
+                    <input type="password" id="password" name="password" required class="form-control" placeholder="Senha" style="width: 40%">
+                </div>
+                <br/>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <br/>
+            <a th:href="@{/register}">Cadastre-se</i></a>
+        </div>
+    </div>
+</body>
