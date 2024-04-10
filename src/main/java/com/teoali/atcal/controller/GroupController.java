@@ -1,8 +1,6 @@
 package com.teoali.atcal.controller;
 
-import com.teoali.atcal.config.MyUserPrincipal;
 import com.teoali.atcal.domain.Group;
-import com.teoali.atcal.domain.User;
 import com.teoali.atcal.repository.GroupRepository;
 import com.teoali.atcal.service.UserService;
 import java.time.LocalDateTime;

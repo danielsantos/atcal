@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head th:replace="~{layoutBase :: head}">
+</head>
+
+<body>
+    <div th:replace="~{layoutBase :: navbar}"></div>
+    <div class="container">
+        <h1 class="mb-3">Editar Grupo</h1>
+        <form th:object="${group}" th:action="@{/groups/edit/{id}(id=${group.id})}" method="post">
+            <input type="text" id="name" name="name" th:field="*{name}" required class="form-control" placeholder="Nome" style="width: 40%">
+
+            <br/>
+
+            <p><button type="submit" class="btn btn-primary">Salvar</button></p>
+        </form>
+        <p><a th:href="@{/groups}">Voltar</a></p>
+    </div>
+</body>
+</html>
