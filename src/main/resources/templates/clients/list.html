@@ -58,10 +58,10 @@
             <a class="navbar-brand" href="#">TEOALI</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Home</a></li>
+            <li><a href="/index">Home</a></li>
             <li class="active"><a href="#">Clientes</a></li>
             <li><a href="/groups">Grupos</a></li>
-            <li><a href="#">Logout</a></li>
+            <li><a href="/logout">Logout</a></li>
         </ul>
     </div>
 </nav>
@@ -96,9 +96,6 @@
                 <td>
                     <a th:href="@{/clients/edit/{id}(id=${client.id})}"  th:method="get"><i class="material-icons" data-toggle="tooltip" title="Editar Cliente">&#xE254;</i></a>
                     <a th:href="@{/payments/list/{id}(id=${client.id})}" th:method="get"><i class="material-icons" data-toggle="tooltip" title="Mensalidades do Cliente">&#xE227;</i></a>
-                    <a th:href="@{/payments/list/old/{id}(id=${client.id})}" th:method="get"><i class="material-icons" data-toggle="tooltip" title="Mensalidades do Cliente">&#xE227;</i></a>
-<!--                    <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>-->
-<!--                    <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>-->
                 </td>
             </tr>
         </tbody>
