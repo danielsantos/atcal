@@ -61,6 +61,7 @@
             <li><a href="/index">Home</a></li>
             <li class="active"><a href="#">Clientes</a></li>
             <li><a href="/groups">Grupos</a></li>
+            <li><a href="/financial/list">Financial V2</a></li>
             <li><a href="/logout">Logout</a></li>
         </ul>
     </div>
@@ -71,10 +72,14 @@
         <div class="table-title">
             <div class="row">
                 <div class="col-sm-6" style="text-align: left;">
-                    <h2>Gerenciando <b>Clientes</b></h2>
+                    <h2>Listando <b>Despesas - Total: <span th:text="${total}"></span></b></h2>
                 </div>
+
                 <div class="col-sm-6">
-                    <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Adicionar Novo Cliente</span></a>
+                    <form th:object="${referMonth}" th:action="@{/financial/list/month}" method="post" id="form">
+                        <input type="text" id="referMonth" name="referMonth" th:field="*{date}" required class="form-control" placeholder="Mês de Referência" style="width: 20%" onblur="submitForm()">
+                    </form>
+                    <a href="/financial" class="btn btn-success"><i class="material-icons">&#xE147;</i><span>Adicionar nova despesa</span></a>
                 </div>
             </div>
         </div>
@@ -82,88 +87,50 @@
     <table id="myTable" class="table table-striped" >
         <thead>
             <tr>
-                <th>ID</th>
-                <th>NOME</th>
-                <th>GRUPO</th>
-                <th>AÇÕES</th>
+                <th>Nome</th>
+                <th>Valor</th>
+                <th>Meio de Pagamento</th>
+                <th>Data</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="client : ${clients}">
-                <td th:text="${client.id}"></td>
-                <td th:text="${client.name}"></td>
-                <td th:text="${client.group?.name}"></td>
+            <tr th:each="expense : ${expenses}">
+                <td th:text="${expense.name}"></td>
+                <td th:text="${expense.amount}"></td>
+                <td th:text="${expense.paymentMethod?.name}"></td>
+                <td th:text="${expense.date}"></td>
                 <td>
-                    <a th:href="@{/clients/edit/{id}(id=${client.id})}"  th:method="get"><i class="material-icons" data-toggle="tooltip" title="Editar Cliente">&#xE254;</i></a>
-                    <a th:href="@{/payments/list/{id}(id=${client.id})}" th:method="get"><i class="material-icons" data-toggle="tooltip" title="Mensalidades do Cliente">&#xE227;</i></a>
+                    <a th:href="@{/financial/delete/{id}(id=${expense.id})}"  th:method="get"><i class="material-icons" data-toggle="tooltip" title="Excluir">&#xE872;</i></a>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
 
-<div id="addEmployeeModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form th:object="${client}" th:action="@{/clients/create}" method="post">
-                <div class="modal-header">
-                    <h4 class="modal-title">Adicionando Cliente</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Nome</label>
-                        <input type="text" name="name" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Grupo</label>
-                        <select name="group" class="form-select">
-                            <option value="">-- Selecione --</option>
-                            <option th:each="it : ${groups}" th:value="${it.id}" th:text="${it.name}"></option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Valor da Mensalidade</label>
-                        <input type="text" name="amount" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Dia do Vencimento</label>
-                        <input type="text" name="dueDay" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Quantas Mensalidades a Cadastrar</label>
-                        <select name="paymentMultiplier" class="form-select">
-                            <option value="12">12</option>
-                            <option value="11">11</option>
-                            <option value="10">10</option>
-                            <option value="9">9</option>
-                            <option value="8">8</option>
-                            <option value="7">7</option>
-                            <option value="6">6</option>
-                            <option value="5">5</option>
-                            <option value="4">4</option>
-                            <option value="3">3</option>
-                            <option value="2">2</option>
-                            <option value="1">1</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
-                    <input type="submit" class="btn btn-success" value="Adicionar">
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 </body>
 <script>
     $(document).ready(function(){
+        //document.getElementById("referMonth").value = getReferMonth();
+
         $('#myTable').dataTable({language: {
                 url: 'https://cdn.datatables.net/plug-ins/2.0.2/i18n/pt-BR.json',
             }}
         );
     });
+
+    function getReferMonth() {
+        var today = new Date();
+        var mt = today.getMonth()+1;
+        if (mt < 10) {
+            mt = "0" + mt;
+        }
+        var yr = today.getFullYear();
+        return mt+"/"+yr;
+    }
+
+    function submitForm() {
+        document.getElementById("form").submit();
+    }
 </script>
 </html>

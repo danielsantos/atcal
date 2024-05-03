@@ -1,4 +1,4 @@
-package com.teoali.atcal.domain;
+package com.teoali.atcal.domain.v2;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,13 +9,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "clients")
-public class Client {
+@Table(name = "expense")
+public class Expense {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -24,27 +25,17 @@ public class Client {
   private String name;
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "group_id")
-  private Group group;
+  @JoinColumn(name = "payment_method_id")
+  private PaymentMethod paymentMethod;
 
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "user_id")
-  private User user;
+  @Column
+  private LocalDate date;
 
   @Column
   private LocalDateTime createdAt;
 
   @Column
-  private LocalDateTime updatedAt;
-
-  @Transient
   private BigDecimal amount;
-
-  @Transient
-  private Integer dueDay;
-
-  @Transient
-  private Integer paymentMultiplier;
 
   public Long getId() {
     return id;
@@ -62,20 +53,12 @@ public class Client {
     this.name = name;
   }
 
-  public Group getGroup() {
-    return group;
+  public PaymentMethod getPaymentMethod() {
+    return paymentMethod;
   }
 
-  public void setGroup(Group group) {
-    this.group = group;
-  }
-
-  public User getUser() {
-    return user;
-  }
-
-  public void setUser(User user) {
-    this.user = user;
+  public void setPaymentMethod(PaymentMethod paymentMethod) {
+    this.paymentMethod = paymentMethod;
   }
 
   public BigDecimal getAmount() {
@@ -86,35 +69,19 @@ public class Client {
     this.amount = amount;
   }
 
-  public Integer getDueDay() {
-    return dueDay;
+  public LocalDate getDate() {
+      return date;
   }
 
-  public void setDueDay(Integer dueDay) {
-    this.dueDay = dueDay;
-  }
-
-  public Integer getPaymentMultiplier() {
-    return paymentMultiplier;
-  }
-
-  public void setPaymentMultiplier(Integer paymentMultiplier) {
-    this.paymentMultiplier = paymentMultiplier;
+  public void setDate(LocalDate date) {
+      this.date = date;
   }
 
   public LocalDateTime getCreatedAt() {
-    return createdAt;
+      return createdAt;
   }
 
   public void setCreatedAt(LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public LocalDateTime getUpdatedAt() {
-    return updatedAt;
-  }
-
-  public void setUpdatedAt(LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
+      this.createdAt = createdAt;
   }
 }
