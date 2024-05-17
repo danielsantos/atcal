@@ -42,6 +42,11 @@ public class HomeController {
     return "home/home";
   }
 
+  @GetMapping("/beta")
+  public String beta() {
+    return "home/index_beta";
+  }
+
   @GetMapping("/index")
   public String index(Model model, Authentication authentication) {
     User user = userRepository.findById(userService.getUser(authentication).getId()).orElseThrow(() -> new IllegalArgumentException("Invalid user"));

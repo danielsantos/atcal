@@ -23,6 +23,7 @@ public class SecurityConfig {
         .authorizeHttpRequests()
         .requestMatchers("/register").permitAll()
         .requestMatchers("/").permitAll()
+        .requestMatchers("/beta").permitAll()
         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
         .and()
         .authorizeHttpRequests().requestMatchers("/**").authenticated()
