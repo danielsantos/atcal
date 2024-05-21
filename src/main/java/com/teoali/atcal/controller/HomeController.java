@@ -38,8 +38,11 @@ public class HomeController {
   private UserService userService;
 
   @GetMapping
+//  public String home() {
+//    return "home/home";
+//  }
   public String home() {
-    return "home/home";
+    return "home/index_beta";
   }
 
   @GetMapping("/beta")
