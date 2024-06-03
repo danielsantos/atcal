@@ -35,6 +35,9 @@ public class Client {
   private LocalDateTime createdAt;
 
   @Column
+  private String cellphone;
+
+  @Column
   private LocalDateTime updatedAt;
 
   @Transient
@@ -116,5 +119,20 @@ public class Client {
 
   public void setUpdatedAt(LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
+  }
+
+  public String getCellphone() {
+      return cellphone;
+  }
+
+  public String getCellphoneOnlyNumbers() {
+    if (cellphone != null) {
+      return cellphone.replaceAll("[^0-9]", "");
+    }
+    return cellphone;
+  }
+
+  public void setCellphone(String cellphone) {
+      this.cellphone = cellphone;
   }
 }

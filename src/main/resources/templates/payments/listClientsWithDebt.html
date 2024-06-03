@@ -97,6 +97,7 @@
                 <td th:text="${#temporals.format(payment.dueDate, 'dd/MM/yyyy')} ?: '-'"></td>
                 <td class="buttons ">
                     <a th:href="@{/payments/edit/{id}(id=${payment.id})}" th:method="get"><i class="material-icons" data-toggle="tooltip" title="Editar Mensalidade">&#xE254;</i></a>
+                    <a th:href="@{https://wa.me/55{cellphone}(cellphone=${payment.client.cellphoneOnlyNumbers})}" target="_blank"><img th:src="@{/images/whatsapp_icon.png}" alt=""></a>
                 </td>
             </tr>
         </tbody>

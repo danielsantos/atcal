@@ -6,6 +6,7 @@
     <meta name="description" content="Creating a Employee table with Twitter Bootstrap. Learn with example of a Employee Table with Twitter Bootstrap.">
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
     <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
     <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -85,6 +86,13 @@
         <br/>
 
         <div class="form-group">
+            <label for="name">Celular:</label>
+            <input type="text" id="cellphone" name="cellphone" th:field="*{cellphone}" required class="form-control" placeholder="Celular" style="width: 40%">
+        </div>
+
+        <br/>
+
+        <div class="form-group">
             <label for="exampleFormControlSelect2" style="width: 40%">Grupo:
                 </br>
                 <select th:field="*{group}" class="form-select" id="exampleFormControlSelect2">
@@ -100,5 +108,10 @@
     </form>
 </div>
 </body>
+<script>
+    $(document).ready(function(){
+        $('#cellphone').mask('(00) 00000-0000');
+    });
+</script>
 
 </html>

@@ -6,6 +6,7 @@
     <meta name="description" content="Creating a Employee table with Twitter Bootstrap. Learn with example of a Employee Table with Twitter Bootstrap.">
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
     <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
     <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -116,6 +117,10 @@
                         <input type="text" name="name" class="form-control" required>
                     </div>
                     <div class="form-group">
+                        <label>Celular</label>
+                        <input type="text" name="cellphone" id="cellphone" class="form-control" required>
+                    </div>
+                    <div class="form-group">
                         <label>Grupo</label>
                         <select name="group" class="form-select">
                             <option value="">-- Selecione --</option>
@@ -164,6 +169,7 @@
                 url: 'https://cdn.datatables.net/plug-ins/2.0.2/i18n/pt-BR.json',
             }}
         );
+        $('#cellphone').mask('(00) 00000-0000');
     });
 </script>
 </html>
