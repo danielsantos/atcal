@@ -96,8 +96,12 @@
                 <td>R$ <span th:text="${payment.amount}" /></td>
                 <td th:text="${#temporals.format(payment.dueDate, 'dd/MM/yyyy')} ?: '-'"></td>
                 <td class="buttons ">
-                    <a th:href="@{/payments/edit/{id}(id=${payment.id})}" th:method="get"><i class="material-icons" data-toggle="tooltip" title="Editar Mensalidade">&#xE254;</i></a>
-                    <a th:href="@{https://wa.me/55{cellphone}(cellphone=${payment.client.cellphoneOnlyNumbers})}" target="_blank"><img th:src="@{/images/whatsapp_icon.png}" alt=""></a>
+                    <div style="background: lavender; border-radius: 15px; width: 75%">
+                        &nbsp;&nbsp;<a th:href="@{/payments/edit/{id}(id=${payment.id})}" th:method="get"><i class="material-icons" data-toggle="tooltip" title="Editar Mensalidade">&#xE254;</i> Editar Mensalidade</a>
+                    </div>
+                    <div style="background: lightblue; border-radius: 15px; width: 75%; margin-top: 2px;">
+                        &nbsp;&nbsp;<a th:href="@{https://wa.me/55{cellphone}(cellphone=${payment.client.cellphoneOnlyNumbers})}" target="_blank"><i class="material-icons" data-toggle="tooltip" title="Editar Mensalidade">&#xe0b7;</i>  Acionar via Whatsapp</a>
+                    </div>
                 </td>
             </tr>
         </tbody>
