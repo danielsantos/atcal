@@ -19,6 +19,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
 
 @Controller
 public class HomeController {
@@ -70,10 +74,43 @@ public class HomeController {
     user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
     user.setCreatedAt(LocalDateTime.now());
     userRepository.save(user);
+    sendEmail(user);
 
     model.addAttribute("user", user);
     model.addAttribute("successRegister", true);
     return "home/login";
+  }
+
+  public void sendEmail(User user) {
+    String host = "smtp.umbler.com";
+    String username = "contato@teoali.com.br";
+    String password = "XXXXX";
+
+    // Configurações adicionais
+    Properties props = new Properties();
+    props.put("mail.smtp.auth", "true");
+    props.put("mail.smtp.starttls.enable", "true");
+    props.put("mail.smtp.host", host);
+    props.put("mail.smtp.port", "587");
+
+    // Cria uma sessão de autenticação
+    Session session = Session.getInstance(props, new Authenticator() {
+      protected PasswordAuthentication getPasswordAuthentication() {
+        return new PasswordAuthentication(username, password);
+      }
+    });
+
+    try {
+      Message message = new MimeMessage(session);
+      message.setFrom(new InternetAddress(username));
+      message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("contato@teoali.com.br"));
+      message.setSubject("Novo usuário cadastrado");
+      message.setText("Novo usuário cadastrado no site: " + user.toString());
+      Transport.send(message);
+      System.out.println("Email enviado com sucesso para: contato@teoali.com.br");
+    } catch (MessagingException e) {
+      throw new RuntimeException("Erro ao enviar email", e);
+    }
   }
 
   @GetMapping("/login")
