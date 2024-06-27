@@ -84,7 +84,7 @@ public class HomeController {
   public void sendEmail(User user) {
     String host = "smtp.umbler.com";
     String username = "contato@teoali.com.br";
-    String password = "XXXXX";
+    String password = "Clau*101106";
 
     // Configurações adicionais
     Properties props = new Properties();
