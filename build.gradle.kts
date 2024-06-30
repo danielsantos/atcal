@@ -23,6 +23,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.awaitility:awaitility:4.2.0")
 	implementation("javax.mail:javax.mail-api:1.6.2")
+	implementation("com.sun.mail:javax.mail:1.6.2")
 	runtimeOnly("com.mysql:mysql-connector-j")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

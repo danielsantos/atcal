@@ -82,32 +82,34 @@ public class HomeController {
   }
 
   public void sendEmail(User user) {
-    String host = "smtp.umbler.com";
     String username = "contato@teoali.com.br";
-    String password = "XXXXX";
 
-    // Configurações adicionais
     Properties props = new Properties();
     props.put("mail.smtp.auth", "true");
     props.put("mail.smtp.starttls.enable", "true");
-    props.put("mail.smtp.host", host);
+    props.put("mail.smtp.host", "smtp.umbler.com");
     props.put("mail.smtp.port", "587");
 
-    // Cria uma sessão de autenticação
     Session session = Session.getInstance(props, new Authenticator() {
       protected PasswordAuthentication getPasswordAuthentication() {
-        return new PasswordAuthentication(username, password);
+        return new PasswordAuthentication(username, "");
       }
     });
 
     try {
+      InternetAddress[] addresses0 = InternetAddress.parse("contato@teoali.com.br");
+      InternetAddress[] addresses1 = InternetAddress.parse("danielsantosr.rj@gmail.com");
+      InternetAddress[] ok = new InternetAddress[2];
+      ok[0] = addresses0[0];
+      ok[1] = addresses1[0];
+
       Message message = new MimeMessage(session);
       message.setFrom(new InternetAddress(username));
-      message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("contato@teoali.com.br"));
+      message.setRecipients(Message.RecipientType.TO, ok);
       message.setSubject("Novo usuário cadastrado");
-      message.setText("Novo usuário cadastrado no site: " + user.toString());
+      message.setText("Novo usuário cadastrado no site: " + user.getUsername() + " - " + user.getName());
       Transport.send(message);
-      System.out.println("Email enviado com sucesso para: contato@teoali.com.br");
+      System.out.println("Email enviado com sucesso para via app: contato@teoali.com.br");
     } catch (MessagingException e) {
       throw new RuntimeException("Erro ao enviar email", e);
     }
